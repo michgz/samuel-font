@@ -9,6 +9,13 @@ import shutil
 import xml.etree.ElementTree as ET
 
 
+import subprocess
+with open('s.py', 'w') as f_scr:
+    f_scr.write('import fontforge\n')
+    f_scr.write('fontforge.open("samuel-11.sfd").generate("samuel-12.svg")\n')
+subprocess.run(['fontforge', '--script', 's.py'])
+
+
 
 P = pathlib.Path(venv.sysconfig.get_path('platlib'))
 
@@ -41,7 +48,7 @@ shutil.copytree(Q.joinpath(__SRC__), Q.joinpath(__DST__))
 
 path_d_E050 = None
 
-root = ET.parse('samuel-11.svg').getroot()
+root = ET.parse('samuel-12.svg').getroot()
 ns = {'xmlns': "http://www.w3.org/2000/svg"} 
 glif = root.find("./xmlns:defs/xmlns:font/xmlns:glyph[@glyph-name='clefs.C']", ns)
 if glif is not None:
@@ -73,7 +80,6 @@ V.renderToSVGFile('test1out.svg')
 # inkscape is okay, but it requires installing inkscape.
 
 
-import subprocess
 
 P_IN = pathlib.Path.cwd().resolve().joinpath("test1out.svg")
 P_OUT = pathlib.Path.cwd().resolve().joinpath("test1out.png")
