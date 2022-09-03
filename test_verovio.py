@@ -17,7 +17,7 @@ if not P.joinpath('verovio').is_dir():
 
 
 if not os.access(P.joinpath('verovio'), os.W_OK):
-    print('Do not have write access to the verovio installation. Most likely you are running\nfrom the main installation of python rather than a virtual environment.\nPlease call this script from a virutal environment. See:\n\n    https://docs.python.org/3/library/venv.html\n')
+    print('Do not have write access to the verovio installation. Most likely you are running\nfrom the main installation of python rather than a virtual environment.\nPlease call this script from a virtual environment. See:\n\n    https://docs.python.org/3/library/venv.html\n')
     sys.exit(-1)
 
 
@@ -45,7 +45,7 @@ V.renderToSVGFile('test1out.svg')
 
 
 # Change from SVG to PNG. There are surprisingly few cross-platform ways of doing this.
-# Reportlib.graphics.renderPM gives terrible results - don't use it! This method using
+# Reportlab.graphics.renderPM gives terrible results - don't use it! This method using
 # inkscape is okay, but it requires installing inkscape.
 
 
