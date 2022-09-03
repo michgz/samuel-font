@@ -1,4 +1,4 @@
-SplineFontDB: 3.0
+SplineFontDB: 3.2
 FontName: samuel-11
 FullName: samuel-11
 FamilyName: samuel-11
@@ -22,7 +22,7 @@ OS2Version: 4
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 1
 CreationTime: 1388334579
-ModificationTime: 1593118394
+ModificationTime: 1662226105
 PfmFamily: 17
 TTFWeight: 500
 TTFWidth: 5
@@ -65,7 +65,7 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 0
 FitToEm: 0
-WinInfo: 57630 51 14
+WinInfo: 57426 51 14
 BeginPrivate: 7
 BlueValues 89 [-512.5 -487.5 -262.5 -237.5 -12.5 12.5 237.5 262.5 487.5 512.5 737.5 762.5 987.5 1012.5]
 OtherBlues 11 [-146 -146]
@@ -75,7 +75,8 @@ StdVW 4 [33]
 StemSnapH 31 [22 32 50 65 70 88 107 135 225]
 StemSnapV 16 [15 28 33 37 50]
 EndPrivate
-BeginChars: 65537 12
+AnchorClass2: "stemUpSE"""  "stemDownNW""" 
+BeginChars: 65537 13
 
 StartChar: .notdef
 Encoding: 65536 -1 0
@@ -561,7 +562,7 @@ StartChar: noteheads.s2
 Encoding: 57748 57748 11
 Width: 281
 GlyphClass: 2
-Flags: HMWO
+Flags: HMW
 HStem: -129 257<86 194.5>
 VStem: 0 281<-47.5 48>
 LayerCount: 2
@@ -578,6 +579,24 @@ SplineSet
  273 80 281 60 281 36 c 0
  281 11 232 8 215 -18 c 0
  198 -44 216.857384441 -85.7648288907 192 -101 c 0
+EndSplineSet
+EndChar
+
+StartChar: uniE0A4
+Encoding: 57508 57508 12
+Width: 1000
+Flags: HO
+AnchorPoint: "stemUpSE" 182 160 basechar 0
+AnchorPoint: "stemDownNW" -190 95 basechar 0
+LayerCount: 2
+Fore
+SplineSet
+-179 98 m 1048
+-191 96 m 3
+ -191 248.05262247 -35 244 65 244 c 3
+ 117.038447325 244 183 198.052734375 183 160 c 3
+ 183 48 91.3161394173 10 -67 10 c 3
+ -120 10 -191 43 -191 96 c 3
 EndSplineSet
 EndChar
 EndChars
