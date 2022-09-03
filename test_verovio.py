@@ -6,6 +6,8 @@ import venv
 import os
 import sys
 import shutil
+import xml.etree.ElementTree as ET
+
 
 
 P = pathlib.Path(venv.sysconfig.get_path('platlib'))
@@ -32,6 +34,28 @@ Q = P.joinpath("verovio", "data")
 shutil.rmtree(Q.joinpath(__DST__), ignore_errors=True)
 shutil.copyfile(Q.joinpath(__SRC__ + ".xml"), Q.joinpath(__DST__ + ".xml"))
 shutil.copytree(Q.joinpath(__SRC__), Q.joinpath(__DST__))
+
+
+
+# Choose a specific glyph from the .SVG export
+
+path_d_E050 = None
+
+root = ET.parse('samuel-11.svg').getroot()
+ns = {'xmlns': "http://www.w3.org/2000/svg"} 
+glif = root.find("./xmlns:defs/xmlns:font/xmlns:glyph[@glyph-name='clefs.C']", ns)
+if glif is not None:
+    #print(glif.get('d'))
+    path_d_E050 = glif.get('d')
+
+
+
+if path_d_E050 is None:
+    raise Exception
+
+with open(Q.joinpath(__DST__, "E050.xml"), "w") as f_glif:
+    f_glif.write('<symbol id="E050" viewBox="0 0 1000 1000" overflow="inherit"><path transform="scale(1,-1)" d="{0}"/></symbol>'.format(path_d_E050))
+
 
 
 
