@@ -10,7 +10,10 @@ import xml.etree.ElementTree as ET
 import subprocess
 
 
-DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000, "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40}}
+DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   \
+              "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
+              "sharp": {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50}  \
+          }
 
 
 S = "DEFAULTS = {0}".format(str(DEFAULTS)) +  """
@@ -94,7 +97,16 @@ for _, flag_count, uni in FLAGS_UP:
 
         C.removeOverlap()
     pen = None
-    
+
+
+
+#flagInternalUp
+
+C = F.createChar(0xE250, "uniE250")
+pen = C.glyphPen()
+F['uniE240'].draw(pen)
+pen = None
+
 
 NOTES_UP = [
     ("noteQuarterUp", "E1D5",  None),
@@ -211,7 +223,51 @@ for _, uni, uni_flag in NOTES_DOWN:
     pen = None
       
 
+#flagInternalDown
 
+C = F.createChar(0xE251, "uniE251")
+pen = C.glyphPen()
+F['uniE241'].draw(pen)
+pen = None
+
+
+
+
+# accidental sharp
+X = 0
+Y = 0
+C = F.createChar(0xE262, "uniE262")
+pen = C.glyphPen()
+# Upright 1
+pen.moveTo((X+( DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+pen.lineTo((X+( DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+pen.lineTo((X+( DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+pen.lineTo((X+( DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+pen.closePath()
+
+# Upright 2
+pen.moveTo((X+(-DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+pen.lineTo((X+(-DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+pen.lineTo((X+(-DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+pen.lineTo((X+(-DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+pen.closePath()
+
+# Horizontal 1
+pen.moveTo((X-DEFAULTS["sharp"]["w"],Y+( DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+pen.lineTo((X+DEFAULTS["sharp"]["w"],Y+( DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+pen.lineTo((X+DEFAULTS["sharp"]["w"],Y+( DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+pen.lineTo((X-DEFAULTS["sharp"]["w"],Y+( DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+pen.closePath()
+
+# Horizontal 2
+pen.moveTo((X-DEFAULTS["sharp"]["w"],Y+(-DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+pen.lineTo((X+DEFAULTS["sharp"]["w"],Y+(-DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+pen.lineTo((X+DEFAULTS["sharp"]["w"],Y+(-DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+pen.lineTo((X-DEFAULTS["sharp"]["w"],Y+(-DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+pen.closePath()
+
+C.removeOverlap()
+pen = None
 
 
 F.save("samuel-12.sfd")
