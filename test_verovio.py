@@ -5,6 +5,7 @@ import pathlib
 import venv
 import os
 import sys
+import shutil
 
 
 P = pathlib.Path(venv.sysconfig.get_path('platlib'))
@@ -20,13 +21,26 @@ if not os.access(P.joinpath('verovio'), os.W_OK):
     sys.exit(-1)
 
 
+# Put the font into the verovio data directory. For now, just copy one of the existing
+# fonts and pretend it's ours.
+
+
+__SRC__ = "Gootville"
+__DST__ = "MyCompletelyNewFont"
+
+Q = P.joinpath("verovio", "data")
+shutil.rmtree(Q.joinpath(__DST__), ignore_errors=True)
+shutil.copyfile(Q.joinpath(__SRC__ + ".xml"), Q.joinpath(__DST__ + ".xml"))
+shutil.copytree(Q.joinpath(__SRC__), Q.joinpath(__DST__))
+
+
 
 # Run Verovio to render the test score
 import verovio
 
 V = verovio.toolkit()
 V.loadFile('test1.musicxml')
-V.setFont('Petaluma')
+V.setFont(__DST__)   # use the font that we've just created
 V.renderToSVGFile('test1out.svg')
 
 
