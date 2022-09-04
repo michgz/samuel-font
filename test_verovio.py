@@ -278,13 +278,13 @@ with open('s2.py', 'w') as f_scr:
     f_scr.write(S)
 subprocess.run(['fontforge', '--script', 's2.py'])
 
-sys.exit(0)
+
 
 
 
 with open('s.py', 'w') as f_scr:
     f_scr.write('import fontforge\n')
-    f_scr.write('fontforge.open("samuel-11.sfd").generate("samuel-12.svg")\n')
+    f_scr.write('fontforge.open("samuel-12.sfd").generate("samuel-13.svg")\n')
 subprocess.run(['fontforge', '--script', 's.py'])
 
 
@@ -320,20 +320,65 @@ shutil.copytree(Q.joinpath(__SRC__), Q.joinpath(__DST__))
 
 path_d_E050 = None
 
-root = ET.parse('samuel-12.svg').getroot()
+root = ET.parse('samuel-13.svg').getroot()
 ns = {'xmlns': "http://www.w3.org/2000/svg"} 
-glif = root.find("./xmlns:defs/xmlns:font/xmlns:glyph[@glyph-name='clefs.C']", ns)
-if glif is not None:
-    #print(glif.get('d'))
-    path_d_E050 = glif.get('d')
+
+E = [('uniE0A4', 'E0A4'), 
+      ('uniE1D5', 'E1D5'), 
+      ('uniE1D6', 'E1D6'), 
+      ('uniE1D7', 'E1D7'), 
+      ('uniE1D8', 'E1D8'), 
+      ('uniE1D9', 'E1D9'), 
+      ('uniE1DA', 'E1DA'), 
+      ('uniE1DB', 'E1DB'), 
+      ('uniE1DC', 'E1DC'), 
+      ('uniE1DD', 'E1DD'), 
+      ('uniE1DE', 'E1DE'), 
+      ('uniE1DF', 'E1DF'), 
+      ('uniE1E0', 'E1E0'), 
+      ('uniE1E1', 'E1E1'), 
+      ('uniE1E2', 'E1E2'), 
+      ('uniE1E3', 'E1E3'), 
+      ('uniE1E4', 'E1E4'), 
+      ('uniE1E5', 'E1E5'), 
+      ('uniE210', 'E210'), 
+      ('uniE240', 'E240'), 
+      ('uniE241', 'E241'), 
+      ('uniE242', 'E242'), 
+      ('uniE243', 'E243'), 
+      ('uniE244', 'E244'), 
+      ('uniE245', 'E245'), 
+      ('uniE246', 'E246'), 
+      ('uniE247', 'E247'), 
+      ('uniE248', 'E248'), 
+      ('uniE249', 'E249'), 
+      ('uniE24A', 'E24A'), 
+      ('uniE24B', 'E24B'), 
+      ('uniE24C', 'E24C'), 
+      ('uniE24D', 'E24D'), 
+      ('uniE24E', 'E24E'), 
+      ('uniE24F', 'E24F'), 
+      ('uniE250', 'E250'), 
+      ('uniE251', 'E251'), 
+      ('uniE262', 'E262')] 
+
+
+for EE in E:
+
+    path_d = None
+
+    glif = root.find("./xmlns:defs/xmlns:font/xmlns:glyph[@glyph-name='{0}']".format(EE[0]), ns)
+    if glif is not None:
+        #print(glif.get('d'))
+        path_d = glif.get('d')
 
 
 
-if path_d_E050 is None:
-    raise Exception
+    if path_d is None:
+        raise Exception("Missing glyph: {0}".format(EE[0]))
 
-with open(Q.joinpath(__DST__, "E050.xml"), "w") as f_glif:
-    f_glif.write('<symbol id="E050" viewBox="0 0 1000 1000" overflow="inherit"><path transform="scale(1,-1)" d="{0}"/></symbol>'.format(path_d_E050))
+    with open(Q.joinpath(__DST__, EE[1] + ".xml"), "w") as f_glif:
+        f_glif.write('<symbol id="{0}" viewBox="0 0 1000 1000" overflow="inherit"><path transform="scale(1,-1)" d="{1}"/></symbol>'.format(EE[1], path_d))
 
 
 
