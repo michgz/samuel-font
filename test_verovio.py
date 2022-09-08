@@ -12,7 +12,8 @@ import subprocess
 
 DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   \
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
-              "sharp": {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50}  \
+              "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
+              "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50}  \
           }
 
 
@@ -269,6 +270,43 @@ pen.closePath()
 C.removeOverlap()
 pen = None
 
+
+
+# accidental Natural
+X = 0
+Y = 0
+C = F.createChar(0xE261, "uniE261")
+pen = C.glyphPen()
+# Upright 1
+pen.moveTo((X+(-DEFAULTS["natural"]["hsep"]-DEFAULTS["natural"]["hthick"])//2,Y+(DEFAULTS["natural"]["h"])//2))
+pen.lineTo((X+(-DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+(DEFAULTS["natural"]["h"])//2))
+pen.lineTo((X+(-DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y-(DEFAULTS["natural"]["vsep"])//2))
+pen.lineTo((X+(-DEFAULTS["natural"]["hsep"]-DEFAULTS["natural"]["hthick"])//2,Y-(DEFAULTS["natural"]["vsep"])//2))
+pen.closePath()
+
+# Upright 2
+pen.moveTo((X+( DEFAULTS["natural"]["hsep"]-DEFAULTS["natural"]["hthick"])//2,Y+(DEFAULTS["natural"]["vsep"])//2))
+pen.lineTo((X+( DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+(DEFAULTS["natural"]["vsep"])//2))
+pen.lineTo((X+( DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y-(DEFAULTS["natural"]["h"])//2))
+pen.lineTo((X+( DEFAULTS["natural"]["hsep"]-DEFAULTS["natural"]["hthick"])//2,Y-(DEFAULTS["natural"]["h"])//2))
+pen.closePath()
+
+# Horizontal 1
+pen.moveTo((X-(DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+( DEFAULTS["natural"]["vsep"]+DEFAULTS["natural"]["vthick"]-DEFAULTS["natural"]["vdrop"])//2))
+pen.lineTo((X+(DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+( DEFAULTS["natural"]["vsep"]+DEFAULTS["natural"]["vthick"]+DEFAULTS["natural"]["vdrop"])//2))
+pen.lineTo((X+(DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+( DEFAULTS["natural"]["vsep"]-DEFAULTS["natural"]["vthick"]+DEFAULTS["natural"]["vdrop"])//2))
+pen.lineTo((X-(DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+( DEFAULTS["natural"]["vsep"]-DEFAULTS["natural"]["vthick"]-DEFAULTS["natural"]["vdrop"])//2))
+pen.closePath()
+
+# Horizontal 2
+pen.moveTo((X-(DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+(-DEFAULTS["natural"]["vsep"]+DEFAULTS["natural"]["vthick"]-DEFAULTS["natural"]["vdrop"])//2))
+pen.lineTo((X+(DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+(-DEFAULTS["natural"]["vsep"]+DEFAULTS["natural"]["vthick"]+DEFAULTS["natural"]["vdrop"])//2))
+pen.lineTo((X+(DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+(-DEFAULTS["natural"]["vsep"]-DEFAULTS["natural"]["vthick"]+DEFAULTS["natural"]["vdrop"])//2))
+pen.lineTo((X-(DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+(-DEFAULTS["natural"]["vsep"]-DEFAULTS["natural"]["vthick"]-DEFAULTS["natural"]["vdrop"])//2))
+pen.closePath()
+
+C.removeOverlap()
+pen = None
 
 F.save("samuel-12.sfd")
 """
