@@ -1,0 +1,17 @@
+StartChar: uniE0A4
+Encoding: 57508 57508 12
+Width: 1000
+Flags: H
+AnchorPoint: "stemUpSE" 182 160 basechar 0
+AnchorPoint: "stemDownNW" -190 95 basechar 0
+LayerCount: 2
+Fore
+SplineSet
+-179 98 m 1048
+-191 96 m 3
+ -191 248.05262247 -35 244 65 244 c 3
+ 117.038447325 244 183 198.052734375 183 160 c 3
+ 183 48 91.3161394173 10 -67 10 c 3
+ -120 10 -191 43 -191 96 c 3
+EndSplineSet
+EndChar

@@ -1,0 +1,79 @@
+SplineFontDB: 3.2
+FontName: samuel-11
+FullName: samuel-11
+FamilyName: samuel-11
+Weight: Medium
+Copyright: Copyright (c) 2020 by Mich GZ
+Version: 1.0
+ItalicAngle: 0
+UnderlinePosition: -100
+UnderlineWidth: 50
+Ascent: 800
+Descent: 200
+InvalidEm: 0
+sfntRevision: 0x00022e14
+LayerCount: 2
+Layer: 0 0 "Back" 1
+Layer: 1 0 "Fore" 0
+XUID: [1021 159 1807193815 11378452]
+StyleMap: 0x0040
+FSType: 0
+OS2Version: 4
+OS2_WeightWidthSlopeOnly: 0
+OS2_UseTypoMetrics: 1
+CreationTime: 1388334579
+ModificationTime: 1662226105
+PfmFamily: 17
+TTFWeight: 500
+TTFWidth: 5
+LineGap: 90
+VLineGap: 0
+Panose: 2 0 6 3 0 0 0 0 0 0
+OS2TypoAscent: 800
+OS2TypoAOffset: 0
+OS2TypoDescent: -200
+OS2TypoDOffset: 0
+OS2TypoLinegap: 90
+OS2WinAscent: 1377
+OS2WinAOffset: 0
+OS2WinDescent: 1564
+OS2WinDOffset: 0
+HheadAscent: 1377
+HheadAOffset: 0
+HheadDescent: -1564
+HheadDOffset: 0
+OS2SubXSize: 650
+OS2SubYSize: 699
+OS2SubXOff: 0
+OS2SubYOff: 140
+OS2SupXSize: 650
+OS2SupYSize: 699
+OS2SupXOff: 0
+OS2SupYOff: 479
+OS2StrikeYSize: 49
+OS2StrikeYPos: 258
+OS2XHeight: 291
+OS2Vendor: 'PfEd'
+OS2CodePages: 00000001.00000000
+OS2UnicodeRanges: 00000001.10000000.00000000.00000000
+MarkAttachClasses: 1
+DEI: 91125
+LangName: 1033 "" "" "" "FontForge 2.0 : samuel-11 : 25-6-2020" "" "Version 1.0"
+Encoding: UnicodeBmp
+UnicodeInterp: none
+NameList: AGL For New Fonts
+DisplaySize: -48
+AntiAlias: 0
+FitToEm: 0
+WinInfo: 0 51 14
+BeginPrivate: 7
+BlueValues 89 [-512.5 -487.5 -262.5 -237.5 -12.5 12.5 237.5 262.5 487.5 512.5 737.5 762.5 987.5 1012.5]
+OtherBlues 11 [-146 -146]
+BlueShift 2 20
+StdHW 4 [88]
+StdVW 4 [33]
+StemSnapH 31 [22 32 50 65 70 88 107 135 225]
+StemSnapV 16 [15 28 33 37 50]
+EndPrivate
+AnchorClass2: "stemUpSE"""  "stemDownNW""" 
+EndSplineFont
