@@ -19,7 +19,7 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
 
 S = "DEFAULTS = {0}".format(str(DEFAULTS)) +  """
 import fontforge
-F = fontforge.open("samuel-15.sfdir")
+F = fontforge.open("samuel-11.sfdir")
 for X in F.glyphs():
     #print(X)
     #print(dir(X))
@@ -358,7 +358,7 @@ pen.closePath()
 C.removeOverlap()
 pen = None
 
-F.save("samuel-12.sfdir")
+F.save("samuel-12.sfd")
 """
 
 
@@ -372,7 +372,7 @@ subprocess.run(['fontforge', '--script', 's2.py'])
 
 with open('s.py', 'w') as f_scr:
     f_scr.write('import fontforge\n')
-    f_scr.write('fontforge.open("samuel-12.sfdir").generate("samuel-13.svg")\n')
+    f_scr.write('fontforge.open("samuel-12.sfd").generate("samuel-13.svg")\n')
 subprocess.run(['fontforge', '--script', 's.py'])
 
 
