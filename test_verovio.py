@@ -13,7 +13,8 @@ import subprocess
 DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   \
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
-              "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50}  \
+              "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
+              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20}   \
           }
 
 
@@ -56,6 +57,100 @@ pen.lineTo((DEFAULTS["stemThickness"],DEFAULTS["stemHeight"]))
 pen.lineTo((0,1000))
 pen.closePath()
 pen = None
+
+
+
+
+# Barlines
+
+C = F.createChar(0xE030, "uniE030")
+pen = C.glyphPen()
+pen.moveTo((0,0))
+pen.lineTo((0,1000))
+pen.lineTo((DEFAULTS["barlines"]["hthick1"],1000))
+pen.lineTo((DEFAULTS["barlines"]["hthick1"],0))
+pen.closePath()
+pen = None
+
+C = F.createChar(0xE031, "uniE031")
+pen = C.glyphPen()
+X = 0
+pen.moveTo((X+0,0))
+pen.lineTo((X+0,1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],0))
+pen.closePath()
+X = DEFAULTS["barlines"]["hthick1"] + DEFAULTS["barlines"]["hsep"]
+pen.moveTo((X+0,0))
+pen.lineTo((X+0,1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],0))
+pen.closePath()
+pen = None
+
+C = F.createChar(0xE032, "uniE032")
+pen = C.glyphPen()
+X = 0
+pen.moveTo((X+0,0))
+pen.lineTo((X+0,1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],0))
+pen.closePath()
+X = DEFAULTS["barlines"]["hthick1"] + DEFAULTS["barlines"]["hsep"]
+pen.moveTo((X+0,0))
+pen.lineTo((X+0,1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick2"],1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick2"],0))
+pen.closePath()
+pen = None
+
+C = F.createChar(0xE033, "uniE033")
+pen = C.glyphPen()
+X = 0
+pen.moveTo((X+0,0))
+pen.lineTo((X+0,1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick2"],1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick2"],0))
+pen.closePath()
+X = DEFAULTS["barlines"]["hthick2"] + DEFAULTS["barlines"]["hsep"]
+pen.moveTo((X+0,0))
+pen.lineTo((X+0,1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],0))
+pen.closePath()
+pen = None
+
+C = F.createChar(0xE034, "uniE034")
+pen = C.glyphPen()
+pen.moveTo((0,0))
+pen.lineTo((0,1000))
+pen.lineTo((DEFAULTS["barlines"]["hthick2"],1000))
+pen.lineTo((DEFAULTS["barlines"]["hthick2"],0))
+pen.closePath()
+pen = None
+
+C = F.createChar(0xE035, "uniE035")
+pen = C.glyphPen()
+X = 0
+pen.moveTo((X+0,0))
+pen.lineTo((X+0,1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick2"],1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick2"],0))
+pen.closePath()
+X = DEFAULTS["barlines"]["hthick2"] + DEFAULTS["barlines"]["hsep"]
+pen.moveTo((X+0,0))
+pen.lineTo((X+0,1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick2"],1000))
+pen.lineTo((X+DEFAULTS["barlines"]["hthick2"],0))
+pen.closePath()
+pen = None
+
+
+
+
+
+
+
 
 
 
