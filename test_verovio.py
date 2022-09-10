@@ -38,6 +38,15 @@ for YC in [7, 260, 513, 768, 1021]:
     pen.closePath()
 pen = None
 
+
+# whole note -- is just a whole notehead with no stems
+
+C = F.createChar(0xE1D2, "uniE1D2")
+pen = C.glyphPen()
+F['uniE0A2'].draw(pen)
+pen = None
+
+
 # Stem. Not in any example fonts
 C = F.createChar(0xE210, "uniE210")
 pen = C.glyphPen()
@@ -107,6 +116,27 @@ C = F.createChar(0xE250, "uniE250")
 pen = C.glyphPen()
 F['uniE240'].draw(pen)
 pen = None
+
+
+
+
+
+
+# Minim up
+
+# Notehead with stem up
+C = F.createChar(0xE1D3, "uniE1D3")
+pen = C.glyphPen()
+F['uniE0A3'].draw(pen)
+pen.moveTo((X,Y))
+pen.lineTo((X-DEFAULTS["stemThickness"],Y))
+pen.lineTo((X-DEFAULTS["stemThickness"],Y+DEFAULTS["stemHeight"]))
+pen.lineTo((X,Y+DEFAULTS["stemHeight"]))
+pen.closePath()
+C.removeOverlap()
+pen = None
+
+
 
 
 NOTES_UP = [
@@ -193,6 +223,26 @@ for _, flag_count, uni in FLAGS_DOWN:
         
         C.removeOverlap()
     pen = None
+
+
+
+# Minim
+
+# Minim with stem down
+C = F.createChar(0xE1D4, "uniE1D4")
+pen = C.glyphPen()
+F['uniE0A3'].draw(pen)
+pen.moveTo((X,Y))
+pen.lineTo((X+DEFAULTS["stemThickness"],Y))
+pen.lineTo((X+DEFAULTS["stemThickness"],Y-DEFAULTS["stemHeight"]))
+pen.lineTo((X,Y-DEFAULTS["stemHeight"]))
+pen.closePath()
+C.removeOverlap()
+pen = None
+
+
+
+
 
 
 NOTES_DOWN = [
