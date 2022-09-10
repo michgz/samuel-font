@@ -14,7 +14,7 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
-              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20}   \
+              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "repeat_diameter": 30}   \
           }
 
 
@@ -146,9 +146,21 @@ pen.closePath()
 pen = None
 
 
+# Repeats
 
+C = F.createChar(0xE043, "uniE043")
+pen = C.glyphPen()
+X = 0
+Y = 125
+R = 30
 
-
+pen.moveTo((X-R,Y))
+pen.curveTo(X-R,Y+0.6*R,X-0.6*R,Y+R,X,Y+R)
+pen.curveTo(X+0.6*R,Y+R,X+R,Y+0.6*R,X+R,Y)
+pen.curveTo(X+R,Y-0.6*R,X+0.6*R,Y-R,X,Y-R)
+pen.curveTo(X-0.6*R,Y-R,X-R,Y-0.6*R,X-R,Y)
+pen.closePath()
+pen = None
 
 
 
