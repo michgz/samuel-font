@@ -14,7 +14,7 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
-              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "repeat_diameter": 30}   \
+              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 30}   \
           }
 
 
@@ -148,21 +148,81 @@ pen = None
 
 # Repeats
 
-C = F.createChar(0xE043, "uniE043")
-pen = C.glyphPen()
-X = 0
-Y = 125
-R = 30
+def DrawCircle(pen, X, Y, R):
+    pen.moveTo((X-R,Y))
+    pen.curveTo(X-R,Y+0.6*R,X-0.6*R,Y+R,X,Y+R)
+    pen.curveTo(X+0.6*R,Y+R,X+R,Y+0.6*R,X+R,Y)
+    pen.curveTo(X+R,Y-0.6*R,X+0.6*R,Y-R,X,Y-R)
+    pen.curveTo(X-0.6*R,Y-R,X-R,Y-0.6*R,X-R,Y)
+    pen.closePath()
 
-pen.moveTo((X-R,Y))
-pen.curveTo(X-R,Y+0.6*R,X-0.6*R,Y+R,X,Y+R)
-pen.curveTo(X+0.6*R,Y+R,X+R,Y+0.6*R,X+R,Y)
-pen.curveTo(X+R,Y-0.6*R,X+0.6*R,Y-R,X,Y-R)
-pen.curveTo(X-0.6*R,Y-R,X-R,Y-0.6*R,X-R,Y)
-pen.closePath()
+def DrawBar(pen, X, Y, YH, THICK):
+    pen.moveTo((X+0,Y+0))
+    pen.lineTo((X+0,Y+YH))
+    pen.lineTo((X+THICK,Y+YH))
+    pen.lineTo((X+THICK,Y+0))
+    pen.closePath()
+
+C = F.createChar(0xE044, "uniE044")
+pen = C.glyphPen()
+DrawCircle(pen, 0, 0, DEFAULTS["barlines"]["repeat_diameter"]/2)
 pen = None
 
 
+C = F.createChar(0xE043, "uniE043")
+pen = C.glyphPen()
+DrawCircle(pen, 0, 125+0*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, 0, 125+1*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, 0, 125+2*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, 0, 125+3*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+pen = None
+
+C = F.createChar(0xE040, "uniE040")
+pen = C.glyphPen()
+X = 0
+DrawBar(pen, X, 0, 1000, DEFAULTS["barlines"]["hthick2"])
+X += DEFAULTS["barlines"]["hthick2"] + DEFAULTS["barlines"]["hsep"]
+DrawBar(pen, X, 0, 1000, DEFAULTS["barlines"]["hthick1"])
+X += DEFAULTS["barlines"]["hthick1"] + DEFAULTS["barlines"]["hsep_dots"] + DEFAULTS["barlines"]["repeat_diameter"]/2
+DrawCircle(pen, X, 125+0*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+1*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+2*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+3*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+pen = None
+
+
+C = F.createChar(0xE041, "uniE041")
+pen = C.glyphPen()
+X = 0
+DrawCircle(pen, X, 125+0*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+1*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+2*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+3*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+X += DEFAULTS["barlines"]["hsep_dots"] + DEFAULTS["barlines"]["repeat_diameter"]/2
+DrawBar(pen, X, 0, 1000, DEFAULTS["barlines"]["hthick1"])
+X += DEFAULTS["barlines"]["hthick1"] + DEFAULTS["barlines"]["hsep"]
+DrawBar(pen, X, 0, 1000, DEFAULTS["barlines"]["hthick2"])
+pen = None
+
+C = F.createChar(0xE042, "uniE042")
+pen = C.glyphPen()
+X = 0
+DrawCircle(pen, X, 125+0*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+1*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+2*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+3*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+X += DEFAULTS["barlines"]["hsep_dots"] + DEFAULTS["barlines"]["repeat_diameter"]/2
+DrawBar(pen, X, 0, 1000, DEFAULTS["barlines"]["hthick1"])
+X += DEFAULTS["barlines"]["hthick1"] + DEFAULTS["barlines"]["hsep"]
+DrawBar(pen, X, 0, 1000, DEFAULTS["barlines"]["hthick2"])
+X += DEFAULTS["barlines"]["hthick2"] + DEFAULTS["barlines"]["hsep"]
+DrawBar(pen, X, 0, 1000, DEFAULTS["barlines"]["hthick1"])
+X += DEFAULTS["barlines"]["hthick1"] + DEFAULTS["barlines"]["hsep_dots"] + DEFAULTS["barlines"]["repeat_diameter"]/2
+DrawCircle(pen, X, 125+0*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+1*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+2*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+DrawCircle(pen, X, 125+3*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
+pen = None
 
 
 
