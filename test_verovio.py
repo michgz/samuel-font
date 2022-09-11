@@ -485,6 +485,9 @@ pen.lineTo((X-DEFAULTS["sharp"]["w"],Y+(-DEFAULTS["sharp"]["vsep"]-DEFAULTS["sha
 pen.closePath()
 
 C.removeOverlap()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
 pen = None
 
 
@@ -523,6 +526,9 @@ pen.lineTo((X-(DEFAULTS["natural"]["hsep"]+DEFAULTS["natural"]["hthick"])//2,Y+(
 pen.closePath()
 
 C.removeOverlap()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
 pen = None
 
 F.save("samuel-12.sfd")
