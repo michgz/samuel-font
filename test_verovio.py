@@ -14,7 +14,9 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
-              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 30}   \
+              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 30},   \
+              "restLonga": {"w": 80},   \
+              "rest": {"w": 140, "h": 125},    \
           }
 
 
@@ -530,6 +532,44 @@ C.left_side_bearing = 0
 C.right_side_bearing = 0
 C.autoHint()
 pen = None
+
+
+# Rests
+C = F.createChar(0xE4E1, "uniE4E1")
+pen = C.glyphPen()
+pen.moveTo((0,750))
+pen.lineTo((DEFAULTS["restLonga"]["w"],750))
+pen.lineTo((DEFAULTS["restLonga"]["w"],250))
+pen.lineTo((0,250))
+pen.closePath()
+pen=None
+
+C = F.createChar(0xE4E2, "uniE4E2")
+pen = C.glyphPen()
+pen.moveTo((0,750))
+pen.lineTo((DEFAULTS["restLonga"]["w"],750))
+pen.lineTo((DEFAULTS["restLonga"]["w"],500))
+pen.lineTo((0,500))
+pen.closePath()
+pen=None
+
+C = F.createChar(0xE4E3, "uniE4E3")
+pen = C.glyphPen()
+pen.moveTo((0,500))
+pen.lineTo((DEFAULTS["rest"]["w"],500))
+pen.lineTo((DEFAULTS["rest"]["w"],500-DEFAULTS["rest"]["h"]))
+pen.lineTo((0,500-DEFAULTS["rest"]["h"]))
+pen.closePath()
+pen=None
+
+C = F.createChar(0xE4E4, "uniE4E4")
+pen = C.glyphPen()
+pen.moveTo((0,500+DEFAULTS["rest"]["h"]))
+pen.lineTo((DEFAULTS["rest"]["w"],500+DEFAULTS["rest"]["h"]))
+pen.lineTo((DEFAULTS["rest"]["w"],500))
+pen.lineTo((0,500))
+pen.closePath()
+pen=None
 
 F.save("samuel-12.sfd")
 """
