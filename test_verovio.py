@@ -15,8 +15,8 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 30},   \
-              "restLonga": {"w": 80},   \
-              "rest": {"w": 140, "h": 125},    \
+              "restLonga": {"w": 210},   \
+              "rest": {"w": 368, "h": 125},    \
           }
 
 
