@@ -1,5 +1,5 @@
 StartChar: three
-Encoding: 51 51 1
+Encoding: 51 51 8
 Width: 343
 GlyphClass: 2
 Flags: MW
@@ -40,4 +40,5 @@ SplineSet
  237 182 204 214 138 237 c 0
  133 239 126 240 116 241 c 1
 EndSplineSet
+Validated: 33
 EndChar
