@@ -612,75 +612,49 @@ __DST__ = "MyCompletelyNewFont"
 
 Q = P.joinpath("verovio", "data")
 shutil.rmtree(Q.joinpath(__DST__), ignore_errors=True)
-shutil.copyfile(Q.joinpath(__SRC__ + ".xml"), Q.joinpath(__DST__ + ".xml"))
-shutil.copytree(Q.joinpath(__SRC__), Q.joinpath(__DST__))
+os.mkdir(Q.joinpath(__DST__))
 
-
-
-# Choose a specific glyph from the .SVG export
-
-path_d_E050 = None
 
 root = ET.parse('samuel-13.svg').getroot()
 ns = {'xmlns': "http://www.w3.org/2000/svg"} 
 
-E = [('uniE0A4', 'E0A4'), 
-      ('uniE1D5', 'E1D5'), 
-      ('uniE1D6', 'E1D6'), 
-      ('uniE1D7', 'E1D7'), 
-      ('uniE1D8', 'E1D8'), 
-      ('uniE1D9', 'E1D9'), 
-      ('uniE1DA', 'E1DA'), 
-      ('uniE1DB', 'E1DB'), 
-      ('uniE1DC', 'E1DC'), 
-      ('uniE1DD', 'E1DD'), 
-      ('uniE1DE', 'E1DE'), 
-      ('uniE1DF', 'E1DF'), 
-      ('uniE1E0', 'E1E0'), 
-      ('uniE1E1', 'E1E1'), 
-      ('uniE1E2', 'E1E2'), 
-      ('uniE1E3', 'E1E3'), 
-      ('uniE1E4', 'E1E4'), 
-      ('uniE1E5', 'E1E5'), 
-      ('uniE210', 'E210'), 
-      ('uniE240', 'E240'), 
-      ('uniE241', 'E241'), 
-      ('uniE242', 'E242'), 
-      ('uniE243', 'E243'), 
-      ('uniE244', 'E244'), 
-      ('uniE245', 'E245'), 
-      ('uniE246', 'E246'), 
-      ('uniE247', 'E247'), 
-      ('uniE248', 'E248'), 
-      ('uniE249', 'E249'), 
-      ('uniE24A', 'E24A'), 
-      ('uniE24B', 'E24B'), 
-      ('uniE24C', 'E24C'), 
-      ('uniE24D', 'E24D'), 
-      ('uniE24E', 'E24E'), 
-      ('uniE24F', 'E24F'), 
-      ('uniE250', 'E250'), 
-      ('uniE251', 'E251'), 
-      ('uniE262', 'E262')] 
+ALL = []
 
 
-for EE in E:
+for glif in root.findall("./xmlns:defs/xmlns:font/xmlns:glyph", ns):
 
     path_d = None
 
-    glif = root.find("./xmlns:defs/xmlns:font/xmlns:glyph[@glyph-name='{0}']".format(EE[0]), ns)
     if glif is not None:
         #print(glif.get('d'))
         path_d = glif.get('d')
+        uni_str = glif.get('unicode')
+        if len(uni_str) == 8 and uni_str.startswith("&#x") and uni_str.endswith(";"):
+            uni_val = uni_str[3:7].upper()
+        elif len(uni_str) == 1:
+            uni_val = "{0:04X}".format(ord(uni_str[0]))
+        else:
+            try:
+                uni_val = "{0:04X}".format(int(uni_str))
+            except:
+                raise Exception
+        glif_name = glif.get('glyph-name')
 
 
+        if path_d is None:
+            raise Exception("Missing glyph: {0}".format(EE[0]))
 
-    if path_d is None:
-        raise Exception("Missing glyph: {0}".format(EE[0]))
+        with open(Q.joinpath(__DST__, uni_val + ".xml"), "w") as f_glif:
+            f_glif.write('<symbol id="{0}" viewBox="0 0 1000 1000" overflow="inherit"><path transform="scale(1,-1)" d="{1}"/></symbol>'.format(uni_val, path_d))
 
-    with open(Q.joinpath(__DST__, EE[1] + ".xml"), "w") as f_glif:
-        f_glif.write('<symbol id="{0}" viewBox="0 0 1000 1000" overflow="inherit"><path transform="scale(1,-1)" d="{1}"/></symbol>'.format(EE[1], path_d))
+        ALL.append({'file': uni_val, 'name': glif_name})
 
+
+with open(Q.joinpath(__DST__ + ".xml"), "w") as f2:
+    f2.write('<?xml version="1.0" encoding="UTF-8"?>\n<bounding-boxes font-family="{0}" units-per-em="1000">\n'.format("samuel-11"))
+    for GLIF in ALL:
+        f2.write('  <g c="{0}" x="0.0" y="-50.0" w="100.0" h="100.0" h-a-x="100" n="{1}"/>\n'.format(GLIF['file'], GLIF['name']))
+    f2.write('</bounding-boxes>\n')
 
 
 
