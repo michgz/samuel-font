@@ -1,7 +1,7 @@
 StartChar: uniE0A3
-Encoding: 57507 57507 14
+Encoding: 57507 57507 19
 Width: 1000
-Flags: HO
+Flags: H
 AnchorPoint: "stemDownNW" -275 98 basechar 0
 AnchorPoint: "stemUpSE" 141 155 basechar 0
 LayerCount: 2
