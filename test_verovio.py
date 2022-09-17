@@ -23,13 +23,19 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
 
 S = "DEFAULTS = {0}".format(str(DEFAULTS)) +  """
 import fontforge
+import json
+import pathlib
+
+with open(pathlib.Path("metadata", "glyphnames.json"), "r") as fnames:
+    names = json.load(fnames)
+
+def GlyphName(u):
+    X = [x for x in names if names[x]['codepoint'] == "U+{0:04X}".format(u)]
+    if len(X) != 1:
+        raise Exception(u)
+    return X[0]
+
 F = fontforge.open("samuel-11.sfdir")
-for X in F.glyphs():
-    #print(X)
-    #print(dir(X))
-    #print(X.glyphname)
-    if X.glyphname == "uniE0A4":
-        print(X.anchorPoints)
 
 # 5-line stave. Included in "sebastian"
 C = F.createChar(0x003D, "equal")
@@ -45,14 +51,14 @@ pen = None
 
 # whole note -- is just a whole notehead with no stems
 
-C = F.createChar(0xE1D2, "uniE1D2")
+C = F.createChar(0xE1D2, GlyphName(0xE1D2))
 pen = C.glyphPen()
-F['uniE0A2'].draw(pen)
+F[GlyphName(0xE0A2)].draw(pen)
 pen = None
 
 
 # Stem. Not in any example fonts
-C = F.createChar(0xE210, "uniE210")
+C = F.createChar(0xE210, GlyphName(0xE210))
 pen = C.glyphPen()
 pen.moveTo((0,0))
 pen.lineTo((DEFAULTS["stemThickness"],0))
@@ -66,7 +72,7 @@ pen = None
 
 # Barlines
 
-C = F.createChar(0xE030, "uniE030")
+C = F.createChar(0xE030, GlyphName(0xE030))
 pen = C.glyphPen()
 pen.moveTo((0,0))
 pen.lineTo((0,1000))
@@ -75,7 +81,7 @@ pen.lineTo((DEFAULTS["barlines"]["hthick1"],0))
 pen.closePath()
 pen = None
 
-C = F.createChar(0xE031, "uniE031")
+C = F.createChar(0xE031, GlyphName(0xE031))
 pen = C.glyphPen()
 X = 0
 pen.moveTo((X+0,0))
@@ -91,7 +97,7 @@ pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],0))
 pen.closePath()
 pen = None
 
-C = F.createChar(0xE032, "uniE032")
+C = F.createChar(0xE032, GlyphName(0xE032))
 pen = C.glyphPen()
 X = 0
 pen.moveTo((X+0,0))
@@ -107,7 +113,7 @@ pen.lineTo((X+DEFAULTS["barlines"]["hthick2"],0))
 pen.closePath()
 pen = None
 
-C = F.createChar(0xE033, "uniE033")
+C = F.createChar(0xE033, GlyphName(0xE033))
 pen = C.glyphPen()
 X = 0
 pen.moveTo((X+0,0))
@@ -123,7 +129,7 @@ pen.lineTo((X+DEFAULTS["barlines"]["hthick1"],0))
 pen.closePath()
 pen = None
 
-C = F.createChar(0xE034, "uniE034")
+C = F.createChar(0xE034, GlyphName(0xE034))
 pen = C.glyphPen()
 pen.moveTo((0,0))
 pen.lineTo((0,1000))
@@ -132,7 +138,7 @@ pen.lineTo((DEFAULTS["barlines"]["hthick2"],0))
 pen.closePath()
 pen = None
 
-C = F.createChar(0xE035, "uniE035")
+C = F.createChar(0xE035, GlyphName(0xE035))
 pen = C.glyphPen()
 X = 0
 pen.moveTo((X+0,0))
@@ -166,13 +172,13 @@ def DrawBar(pen, X, Y, YH, THICK):
     pen.lineTo((X+THICK,Y+0))
     pen.closePath()
 
-C = F.createChar(0xE044, "uniE044")
+C = F.createChar(0xE044, GlyphName(0xE044))
 pen = C.glyphPen()
 DrawCircle(pen, 0, 0, DEFAULTS["barlines"]["repeat_diameter"]/2)
 pen = None
 
 
-C = F.createChar(0xE043, "uniE043")
+C = F.createChar(0xE043, GlyphName(0xE043))
 pen = C.glyphPen()
 DrawCircle(pen, 0, 125+0*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
 DrawCircle(pen, 0, 125+1*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
@@ -180,7 +186,7 @@ DrawCircle(pen, 0, 125+2*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
 DrawCircle(pen, 0, 125+3*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
 pen = None
 
-C = F.createChar(0xE040, "uniE040")
+C = F.createChar(0xE040, GlyphName(0xE040))
 pen = C.glyphPen()
 X = 0
 DrawBar(pen, X, 0, 1000, DEFAULTS["barlines"]["hthick2"])
@@ -194,7 +200,7 @@ DrawCircle(pen, X, 125+3*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
 pen = None
 
 
-C = F.createChar(0xE041, "uniE041")
+C = F.createChar(0xE041, GlyphName(0xE041))
 pen = C.glyphPen()
 X = 0
 DrawCircle(pen, X, 125+0*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
@@ -207,7 +213,7 @@ X += DEFAULTS["barlines"]["hthick1"] + DEFAULTS["barlines"]["hsep"]
 DrawBar(pen, X, 0, 1000, DEFAULTS["barlines"]["hthick2"])
 pen = None
 
-C = F.createChar(0xE042, "uniE042")
+C = F.createChar(0xE042, GlyphName(0xE042))
 pen = C.glyphPen()
 X = 0
 DrawCircle(pen, X, 125+0*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
@@ -231,7 +237,7 @@ pen = None
 
 
 X, Y = None, None
-for A in F['uniE0A4'].anchorPoints:
+for A in F[GlyphName(0xE0A4)].anchorPoints:
     if A[0] == 'stemUpSE' and A[1] == 'base':
         X, Y = A[2], A[3]
 
@@ -250,7 +256,7 @@ FLAGS_UP = [
 
 for _, flag_count, uni in FLAGS_UP:
 
-    C = F.createChar(int(uni, 16), "uni" + uni)
+    C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
     pen = C.glyphPen()
     
     # Quavers and semiquavers use the standard stem height. After that, need to
@@ -282,9 +288,9 @@ for _, flag_count, uni in FLAGS_UP:
 
 #flagInternalUp
 
-C = F.createChar(0xE250, "uniE250")
+C = F.createChar(0xE250, GlyphName(0xE250))
 pen = C.glyphPen()
-F['uniE240'].draw(pen)
+F[GlyphName(0xE240)].draw(pen)
 pen = None
 
 
@@ -295,14 +301,14 @@ pen = None
 # Minim up
 
 X, Y = None, None
-for A in F['uniE0A3'].anchorPoints:
+for A in F[GlyphName(0xE0A3)].anchorPoints:
     if A[0] == 'stemUpSE' and A[1] == 'base':
         X, Y = A[2], A[3]
 
 # Notehead with stem up
-C = F.createChar(0xE1D3, "uniE1D3")
+C = F.createChar(0xE1D3, GlyphName(0xE1D3))
 pen = C.glyphPen()
-F['uniE0A3'].draw(pen)
+F[GlyphName(0xE0A3)].draw(pen)
 pen.moveTo((X,Y))
 pen.lineTo((X-DEFAULTS["stemThickness"],Y))
 pen.lineTo((X-DEFAULTS["stemThickness"],Y+DEFAULTS["stemHeight"]))
@@ -329,12 +335,12 @@ NOTES_UP = [
 for _, uni, uni_flag in NOTES_UP:
 
     # Notehead with stem up
-    C = F.createChar(int(uni, 16), "uni" + uni)
+    C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
     pen = C.glyphPen()
-    F['uniE0A4'].draw(pen)
+    F[GlyphName(0xE04A)].draw(pen)
     if uni_flag:
         try:
-            F['uni' + uni_flag].draw(pen)       
+            F[GlyphName(int(uni_flag, 16))].draw(pen)       
         except TypeError:
           print('uni' + uni_flag)
     pen.moveTo((X,Y))
@@ -350,7 +356,7 @@ for _, uni, uni_flag in NOTES_UP:
 
 
 X, Y = None, None
-for A in F['uniE0A4'].anchorPoints:
+for A in F[GlyphName(0xE0A4)].anchorPoints:
     if A[0] == 'stemDownNW' and A[1] == 'base':
         X, Y = A[2], A[3]
         
@@ -370,7 +376,7 @@ FLAGS_DOWN = [
 
 for _, flag_count, uni in FLAGS_DOWN:
 
-    C = F.createChar(int(uni, 16), "uni" + uni)
+    C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
     pen = C.glyphPen()
     
     # Quavers and semiquavers use the standard stem height. After that, need to
@@ -404,14 +410,14 @@ for _, flag_count, uni in FLAGS_DOWN:
 # Minim
 
 X, Y = None, None
-for A in F['uniE0A3'].anchorPoints:
+for A in F[GlyphName(0xE0A3)].anchorPoints:
     if A[0] == 'stemDownNW' and A[1] == 'base':
         X, Y = A[2], A[3]
 
 # Minim with stem down
-C = F.createChar(0xE1D4, "uniE1D4")
+C = F.createChar(0xE1D4, GlyphName(0xE1D4))
 pen = C.glyphPen()
-F['uniE0A3'].draw(pen)
+F[GlyphName(0xE0A3)].draw(pen)
 pen.moveTo((X,Y))
 pen.lineTo((X+DEFAULTS["stemThickness"],Y))
 pen.lineTo((X+DEFAULTS["stemThickness"],Y-DEFAULTS["stemHeight"]))
@@ -440,11 +446,11 @@ NOTES_DOWN = [
 for _, uni, uni_flag in NOTES_DOWN:
 
     # Notehead with stem down
-    C = F.createChar(int(uni, 16), "uni" + uni)
+    C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
     pen = C.glyphPen()
-    F['uniE0A4'].draw(pen)
+    F[GlyphName(0xE0A4)].draw(pen)
     if uni_flag:
-        F['uni' + uni_flag].draw(pen)       
+        F[GlyphName(int(uni_flag, 16))].draw(pen)
     pen.moveTo((X,Y))
     pen.lineTo((X+DEFAULTS["stemThickness"],Y))
     pen.lineTo((X+DEFAULTS["stemThickness"],Y-DEFAULTS["stemHeight"]))
@@ -456,9 +462,9 @@ for _, uni, uni_flag in NOTES_DOWN:
 
 #flagInternalDown
 
-C = F.createChar(0xE251, "uniE251")
+C = F.createChar(0xE251, GlyphName(0xE251))
 pen = C.glyphPen()
-F['uniE241'].draw(pen)
+F[GlyphName(0xE241)].draw(pen)
 pen = None
 
 
@@ -467,7 +473,7 @@ pen = None
 # accidental sharp
 X = 0
 Y = 0
-C = F.createChar(0xE262, "uniE262")
+C = F.createChar(0xE262, GlyphName(0xE262))
 pen = C.glyphPen()
 # Upright 1
 pen.moveTo((X+( DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
@@ -508,7 +514,7 @@ pen = None
 # accidental Natural
 X = 0
 Y = 0
-C = F.createChar(0xE261, "uniE261")
+C = F.createChar(0xE261, GlyphName(0xE261))
 pen = C.glyphPen()
 # Upright 1
 pen.moveTo((X+(-DEFAULTS["natural"]["hsep"]-DEFAULTS["natural"]["hthick"])//2,Y+(DEFAULTS["natural"]["h"])//2))
@@ -546,7 +552,7 @@ pen = None
 
 
 # Rests
-C = F.createChar(0xE4E1, "uniE4E1")
+C = F.createChar(0xE4E1, GlyphName(0xE4E1))
 pen = C.glyphPen()
 pen.moveTo((0,750))
 pen.lineTo((DEFAULTS["restLonga"]["w"],750))
@@ -555,7 +561,7 @@ pen.lineTo((0,250))
 pen.closePath()
 pen=None
 
-C = F.createChar(0xE4E2, "uniE4E2")
+C = F.createChar(0xE4E2, GlyphName(0xE4E2))
 pen = C.glyphPen()
 pen.moveTo((0,750))
 pen.lineTo((DEFAULTS["restLonga"]["w"],750))
@@ -564,7 +570,7 @@ pen.lineTo((0,500))
 pen.closePath()
 pen=None
 
-C = F.createChar(0xE4E3, "uniE4E3")
+C = F.createChar(0xE4E3, GlyphName(0xE4E3))
 pen = C.glyphPen()
 pen.moveTo((0,500))
 pen.lineTo((DEFAULTS["rest"]["w"],500))
@@ -573,7 +579,7 @@ pen.lineTo((0,500-DEFAULTS["rest"]["h"]))
 pen.closePath()
 pen=None
 
-C = F.createChar(0xE4E4, "uniE4E4")
+C = F.createChar(0xE4E4, GlyphName(0xE4E4))
 pen = C.glyphPen()
 pen.moveTo((0,500+DEFAULTS["rest"]["h"]))
 pen.lineTo((DEFAULTS["rest"]["w"],500+DEFAULTS["rest"]["h"]))
