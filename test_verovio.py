@@ -11,6 +11,9 @@ import xml.etree.ElementTree as ET
 import subprocess
 
 
+__NAME__ = "Samuel"
+__VERSION__ = "0.0.1"
+
 DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   \
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
@@ -689,6 +692,39 @@ def CreateVerovioFont(src, name, dstdir):
 
 
 
+# Create a SMuFL metadata file
+
+S = """
+
+import json
+
+D = {}
+
+"""
+S += "D.update({'fontName': " + '"{0}"'.format(__NAME__) + "})\n"
+S += "D.update({'fontVersion': " + '"{0}"'.format(__VERSION__) + "})\n"
+
+S += """
+D.update({'engravingDefaults': {}})
+D.update({'glyphAdvanceWidths': {}})
+D.update({'glyphBBoxes': {}})
+"""
+S += """
+
+with open("{0}", "w") as f:
+    json.dump(D, f, indent = "\t")
+
+""".format("samuel-metadata.json")
+
+with open('s7.py', 'w') as f_scr:
+    f_scr.write(S)
+subprocess.run(['fontforge', '--script', 's7.py'])
+
+
+
+
+
+
 # Put the font into the verovio data directory.
 
 P = pathlib.Path(venv.sysconfig.get_path('platlib'))
@@ -701,7 +737,7 @@ if not os.access(P.joinpath('verovio'), os.W_OK):
     print('Do not have write access to the verovio installation. Most likely you are running\nfrom the main installation of python rather than a virtual environment.\nPlease call this script from a virtual environment. See:\n\n    https://docs.python.org/3/library/venv.html\n')
     sys.exit(-1)
 
-CreateVerovioFont("samuel-12.sfd", "Samuel", P.joinpath("verovio", "data"))
+CreateVerovioFont("samuel-12.sfd", __NAME__, P.joinpath("verovio", "data"))
 
 
 
