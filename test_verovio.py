@@ -6,6 +6,7 @@ import venv
 import os
 import sys
 import shutil
+import textwrap
 import xml.etree.ElementTree as ET
 import subprocess
 
@@ -621,6 +622,26 @@ ns = {'xmlns': "http://www.w3.org/2000/svg"}
 ALL = []
 
 
+
+with open('s4.py', 'w') as f_scr:
+    f_scr.write(textwrap.dedent("""
+      import fontforge
+      __DST__ = "{0}"
+      __NAME__ = "{1}"
+      f = fontforge.open("samuel-12.sfd")
+      """.format(__DST__, "samuel-11") + """
+      with open(__DST__ + ".xml", "w") as f2:
+          f2.write('<?xml version="1.0" encoding="UTF-8"?>\\n<bounding-boxes font-family="{0}" units-per-em="1000">\\n'.format(__NAME__))
+          for GLIF in f.glyphs():
+              (xa, ya, xb, yb) = GLIF.boundingBox()
+              f2.write('  <g c="{0:04X}" x="{2:0.1f}" y="{3:0.1f}" w="{4:0.1f}" h="{5:0.1f}" h-a-x="100" n="{1}"/>\\n'.format(GLIF.unicode, GLIF.glyphname, xa, ya, xb-xa, yb-ya))
+          f2.write('</bounding-boxes>\\n')
+      """))
+subprocess.run(['fontforge', '--script', 's4.py'])
+shutil.copy(Q.joinpath(__DST__ + ".xml"), __DST__ + ".xml")
+
+
+
 for glif in root.findall("./xmlns:defs/xmlns:font/xmlns:glyph", ns):
 
     path_d = None
@@ -648,14 +669,6 @@ for glif in root.findall("./xmlns:defs/xmlns:font/xmlns:glyph", ns):
             f_glif.write('<symbol id="{0}" viewBox="0 0 1000 1000" overflow="inherit"><path transform="scale(1,-1)" d="{1}"/></symbol>'.format(uni_val, path_d))
 
         ALL.append({'file': uni_val, 'name': glif_name})
-
-
-with open(Q.joinpath(__DST__ + ".xml"), "w") as f2:
-    f2.write('<?xml version="1.0" encoding="UTF-8"?>\n<bounding-boxes font-family="{0}" units-per-em="1000">\n'.format("samuel-11"))
-    for GLIF in ALL:
-        f2.write('  <g c="{0}" x="0.0" y="-50.0" w="100.0" h="100.0" h-a-x="100" n="{1}"/>\n'.format(GLIF['file'], GLIF['name']))
-    f2.write('</bounding-boxes>\n')
-
 
 
 # Run Verovio to render the test score
