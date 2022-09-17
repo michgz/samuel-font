@@ -634,7 +634,14 @@ with open('s4.py', 'w') as f_scr:
           f2.write('<?xml version="1.0" encoding="UTF-8"?>\\n<bounding-boxes font-family="{0}" units-per-em="1000">\\n'.format(__NAME__))
           for GLIF in f.glyphs():
               (xa, ya, xb, yb) = GLIF.boundingBox()
-              f2.write('  <g c="{0:04X}" x="{2:0.1f}" y="{3:0.1f}" w="{4:0.1f}" h="{5:0.1f}" h-a-x="100" n="{1}"/>\\n'.format(GLIF.unicode, GLIF.glyphname, xa, ya, xb-xa, yb-ya))
+              f2.write('  <g c="{0:04X}" x="{2:0.1f}" y="{3:0.1f}" w="{4:0.1f}" h="{5:0.1f}" h-a-x="100" n="{1}"'.format(GLIF.unicode, GLIF.glyphname, xa, ya, xb-xa, yb-ya))
+              if len(GLIF.anchorPoints) == 0:
+                  f2.write('/>\\n')
+              else:
+                  f2.write('>\\n')
+                  for ANCHOR in GLIF.anchorPoints:
+                      f2.write('    <a n="{0}" x="{2:0.1f}" y="{3:0.1f}"/>\\n'.format(*ANCHOR))
+                  f2.write('  </g>\\n')
           f2.write('</bounding-boxes>\\n')
       """))
 subprocess.run(['fontforge', '--script', 's4.py'])
