@@ -646,7 +646,7 @@ with open('s4.py', 'w') as f_scr:
           f2.write('</bounding-boxes>\\n')
       """))
 subprocess.run(['fontforge', '--script', 's4.py'])
-shutil.copy(Q.joinpath(__DST__ + ".xml"), __DST__ + ".xml")
+shutil.copy( __DST__ + ".xml", Q.joinpath(__DST__ + ".xml"))
 
 
 
