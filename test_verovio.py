@@ -697,6 +697,7 @@ def CreateVerovioFont(src, name, dstdir):
 S = """
 
 import json
+import fontforge
 
 D = {}
 
@@ -708,6 +709,24 @@ S += """
 D.update({'engravingDefaults': {}})
 D.update({'glyphAdvanceWidths': {}})
 D.update({'glyphBBoxes': {}})
+D.update({'glyphsWithAnchors': {}})
+"""
+
+S += """
+f = fontforge.open("{0}")
+""".format("samuel-12.sfd")
+
+S += """
+
+for GLIF in f.glyphs():
+    D['glyphAdvanceWidths'].update({GLIF.glyphname: GLIF.width / 250.0})
+    (xa, ya, xb, yb) = GLIF.boundingBox()
+    D['glyphBBoxes'].update({GLIF.glyphname: {'bBoxNE': [xb/250.0, yb/250.0], 'bBoxSW': [xa/250.0, ya/250.0]}})
+    if len(GLIF.anchorPoints) != 0:
+        E = {}
+        for ANCHOR in GLIF.anchorPoints:
+            E.update({ANCHOR[0]: [ANCHOR[2]/250.0, ANCHOR[3]/250.0]})
+        D['glyphsWithAnchors'].update({GLIF.glyphname: E})
 """
 S += """
 
