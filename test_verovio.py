@@ -599,13 +599,97 @@ subprocess.run(['fontforge', '--script', 's2.py'])
 
 
 
+def CreateVerovioFont(src, name, dstdir):
+    # src is a fontforge font. dstdir is a directory to put the Verovio-compatible
+    # font data to.
+    
+    __TMP__ = "samuel-13"   # name of temporary SVG fontforge file to create. For now,
+                             # it can just go in the working directory.
+    
+    
+    # Make sure the destination directory is a pathlib path.
+    if not isinstance(dstdir, pathlib.Path):
+        dstdir = pathlib.Path(dstdir)
+    
+    with open('s5.py', 'w') as f_scr:
+        f_scr.write('import fontforge\n')
+        f_scr.write('fontforge.open("{0}").generate("{1}.svg")\n'.format(src, __TMP__))
+    subprocess.run(['fontforge', '--script', 's5.py'])
 
-with open('s.py', 'w') as f_scr:
-    f_scr.write('import fontforge\n')
-    f_scr.write('fontforge.open("samuel-12.sfd").generate("samuel-13.svg")\n')
-subprocess.run(['fontforge', '--script', 's.py'])
 
 
+    __DST__ = name
+
+    shutil.rmtree(dstdir.joinpath(__DST__), ignore_errors=True)
+    os.mkdir(dstdir.joinpath(__DST__))
+
+
+    root = ET.parse('{0}.svg'.format(__TMP__)).getroot()
+    ns = {'xmlns': "http://www.w3.org/2000/svg"} 
+
+    ALL = []
+
+
+
+    with open('s4.py', 'w') as f_scr:
+        f_scr.write(textwrap.dedent("""
+          import fontforge
+          __DST__ = "{0}"
+          __NAME__ = "{1}"
+          f = fontforge.open("samuel-12.sfd")
+          """.format(__DST__, name) + """
+          with open(__DST__ + ".xml", "w") as f2:
+              f2.write('<?xml version="1.0" encoding="UTF-8"?>\\n<bounding-boxes font-family="{0}" units-per-em="1000">\\n'.format(__NAME__))
+              for GLIF in f.glyphs():
+                  (xa, ya, xb, yb) = GLIF.boundingBox()
+                  xah = GLIF.width    # Assume h-a-x means advance width
+                  f2.write('  <g c="{0:04X}" x="{2:0.1f}" y="{3:0.1f}" w="{4:0.1f}" h="{5:0.1f}" h-a-x="{6:0.1f}" n="{1}"'.format(GLIF.unicode, GLIF.glyphname, xa, ya, xb-xa, yb-ya, xah))
+                  if len(GLIF.anchorPoints) == 0:
+                      f2.write('/>\\n')
+                  else:
+                      f2.write('>\\n')
+                      for ANCHOR in GLIF.anchorPoints:
+                          f2.write('    <a n="{0}" x="{2:0.1f}" y="{3:0.1f}"/>\\n'.format(*ANCHOR))
+                      f2.write('  </g>\\n')
+              f2.write('</bounding-boxes>\\n')
+          """))
+    subprocess.run(['fontforge', '--script', 's4.py'])
+    shutil.copy( __DST__ + ".xml", dstdir.joinpath(__DST__ + ".xml"))
+
+
+
+    for glif in root.findall("./xmlns:defs/xmlns:font/xmlns:glyph", ns):
+
+        path_d = None
+
+        if glif is not None:
+            #print(glif.get('d'))
+            path_d = glif.get('d')
+            uni_str = glif.get('unicode')
+            if len(uni_str) == 8 and uni_str.startswith("&#x") and uni_str.endswith(";"):
+                uni_val = uni_str[3:7].upper()
+            elif len(uni_str) == 1:
+                uni_val = "{0:04X}".format(ord(uni_str[0]))
+            else:
+                try:
+                    uni_val = "{0:04X}".format(int(uni_str))
+                except:
+                    raise Exception
+            glif_name = glif.get('glyph-name')
+
+
+            if path_d is None:
+                raise Exception("Missing glyph: {0}".format(EE[0]))
+
+            with open(dstdir.joinpath(__DST__, uni_val + ".xml"), "w") as f_glif:
+                f_glif.write('<symbol id="{0}" viewBox="0 0 1000 1000" overflow="inherit"><path transform="scale(1,-1)" d="{1}"/></symbol>'.format(uni_val, path_d))
+
+            ALL.append({'file': uni_val, 'name': glif_name})
+
+
+
+
+# Put the font into the verovio data directory.
 
 P = pathlib.Path(venv.sysconfig.get_path('platlib'))
 
@@ -613,86 +697,12 @@ if not P.joinpath('verovio').is_dir():
     print('Could not find verovio installed in this virtual environment. Try:\n\n    pip install verovio\n')
     sys.exit(-1)
 
-
-
 if not os.access(P.joinpath('verovio'), os.W_OK):
     print('Do not have write access to the verovio installation. Most likely you are running\nfrom the main installation of python rather than a virtual environment.\nPlease call this script from a virtual environment. See:\n\n    https://docs.python.org/3/library/venv.html\n')
     sys.exit(-1)
 
+CreateVerovioFont("samuel-12.sfd", "Samuel", P.joinpath("verovio", "data"))
 
-# Put the font into the verovio data directory. For now, just copy one of the existing
-# fonts and pretend it's ours.
-
-
-__SRC__ = "Bravura"
-__DST__ = "MyCompletelyNewFont"
-
-Q = P.joinpath("verovio", "data")
-shutil.rmtree(Q.joinpath(__DST__), ignore_errors=True)
-os.mkdir(Q.joinpath(__DST__))
-
-
-root = ET.parse('samuel-13.svg').getroot()
-ns = {'xmlns': "http://www.w3.org/2000/svg"} 
-
-ALL = []
-
-
-
-with open('s4.py', 'w') as f_scr:
-    f_scr.write(textwrap.dedent("""
-      import fontforge
-      __DST__ = "{0}"
-      __NAME__ = "{1}"
-      f = fontforge.open("samuel-12.sfd")
-      """.format(__DST__, "samuel-11") + """
-      with open(__DST__ + ".xml", "w") as f2:
-          f2.write('<?xml version="1.0" encoding="UTF-8"?>\\n<bounding-boxes font-family="{0}" units-per-em="1000">\\n'.format(__NAME__))
-          for GLIF in f.glyphs():
-              (xa, ya, xb, yb) = GLIF.boundingBox()
-              xah = GLIF.width    # Assume h-a-x means advance width
-              f2.write('  <g c="{0:04X}" x="{2:0.1f}" y="{3:0.1f}" w="{4:0.1f}" h="{5:0.1f}" h-a-x="{6:0.1f}" n="{1}"'.format(GLIF.unicode, GLIF.glyphname, xa, ya, xb-xa, yb-ya, xah))
-              if len(GLIF.anchorPoints) == 0:
-                  f2.write('/>\\n')
-              else:
-                  f2.write('>\\n')
-                  for ANCHOR in GLIF.anchorPoints:
-                      f2.write('    <a n="{0}" x="{2:0.1f}" y="{3:0.1f}"/>\\n'.format(*ANCHOR))
-                  f2.write('  </g>\\n')
-          f2.write('</bounding-boxes>\\n')
-      """))
-subprocess.run(['fontforge', '--script', 's4.py'])
-shutil.copy( __DST__ + ".xml", Q.joinpath(__DST__ + ".xml"))
-
-
-
-for glif in root.findall("./xmlns:defs/xmlns:font/xmlns:glyph", ns):
-
-    path_d = None
-
-    if glif is not None:
-        #print(glif.get('d'))
-        path_d = glif.get('d')
-        uni_str = glif.get('unicode')
-        if len(uni_str) == 8 and uni_str.startswith("&#x") and uni_str.endswith(";"):
-            uni_val = uni_str[3:7].upper()
-        elif len(uni_str) == 1:
-            uni_val = "{0:04X}".format(ord(uni_str[0]))
-        else:
-            try:
-                uni_val = "{0:04X}".format(int(uni_str))
-            except:
-                raise Exception
-        glif_name = glif.get('glyph-name')
-
-
-        if path_d is None:
-            raise Exception("Missing glyph: {0}".format(EE[0]))
-
-        with open(Q.joinpath(__DST__, uni_val + ".xml"), "w") as f_glif:
-            f_glif.write('<symbol id="{0}" viewBox="0 0 1000 1000" overflow="inherit"><path transform="scale(1,-1)" d="{1}"/></symbol>'.format(uni_val, path_d))
-
-        ALL.append({'file': uni_val, 'name': glif_name})
 
 
 # Run Verovio to render the test score
@@ -700,7 +710,7 @@ import verovio
 
 V = verovio.toolkit()
 V.loadFile('test1.musicxml')
-V.setFont(__DST__)   # use the font that we've just created
+V.setFont("Samuel")   # use the font that we've just created
 V.renderToSVGFile('test1out.svg')
 
 
