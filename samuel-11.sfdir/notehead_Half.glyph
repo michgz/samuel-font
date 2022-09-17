@@ -1,9 +1,11 @@
-StartChar: uniE0A2
-Encoding: 57506 57506 17
+StartChar: noteheadHalf
+Encoding: 57507 57507 16
 Width: 361
-Flags: HWO
+Flags: W
 HStem: -121 24<32.8851 125.764> 98 27<243.023 331.427>
 VStem: 0 23<-89.4248 -40.932> 342 19<37.6756 87.8824>
+AnchorPoint: "stemDownNW" 0 -55 basechar 0
+AnchorPoint: "stemUpSE" 362 44 basechar 0
 LayerCount: 2
 Fore
 SplineSet
