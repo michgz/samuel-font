@@ -15,6 +15,7 @@ __NAME__ = "Samuel"
 __VERSION__ = "0.0.1"
 
 DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   \
+              'beamSpacing': 25,   'beamThickness': 100,   \
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
@@ -694,7 +695,9 @@ def CreateVerovioFont(src, name, dstdir):
 
 # Create a SMuFL metadata file
 
-S = """
+
+S = "DEFAULTS = {0}".format(str(DEFAULTS))
+S += """
 
 import json
 import fontforge
@@ -728,6 +731,49 @@ for GLIF in f.glyphs():
             E.update({ANCHOR[0]: [ANCHOR[2]/250.0, ANCHOR[3]/250.0]})
         D['glyphsWithAnchors'].update({GLIF.glyphname: E})
 """
+
+S += """
+
+# Now the generic stuff
+
+D['engravingDefaults'].update({'textFontFamily': ['serif']})
+
+D['engravingDefaults'].update({'beamSpacing': DEFAULT['beamSpacing']/250.0})
+D['engravingDefaults'].update({'beamThickness': DEFAULT['beamThickness']/250.0})
+D['engravingDefaults'].update({'staffLineThickness': DEFAULT['staffLineThickness']/250.0})
+D['engravingDefaults'].update({'stemThickness': DEFAULT['stemThickness']/250.0})
+
+		# "arrowShaftThickness":0.16,
+		# "barlineSeparation":0.4,
+		# "beamSpacing":0.25,
+		# "beamThickness":0.5,
+		# "bracketThickness":0.5,
+		# "dashedBarlineDashLength":0.5,
+		# "dashedBarlineGapLength":0.25,
+		# "dashedBarlineThickness":0.16,
+		# "hBarThickness":1.0,
+		# "hairpinThickness":0.16,
+		# "legerLineExtension":0.4,
+		# "legerLineThickness":0.16,
+		# "lyricLineThickness":0.16,
+		# "octaveLineThickness":0.16,
+		# "pedalLineThickness":0.16,
+		# "repeatBarlineDotSeparation":0.16,
+		# "repeatEndingLineThickness":0.16,
+		# "slurEndpointThickness":0.1,
+		# "slurMidpointThickness":0.22,
+		# "staffLineThickness":0.13,
+		# "stemThickness":0.12,
+		# "subBracketThickness":0.16,
+		# "textEnclosureThickness":0.16,
+		# "thickBarlineThickness":0.5,
+		# "thinBarlineThickness":0.16,
+		# "tieEndpointThickness":0.1,
+		# "tieMidpointThickness":0.22,
+		# "tupletBracketThickness":0.16
+
+"""
+
 S += """
 
 with open("{0}", "w") as f:
