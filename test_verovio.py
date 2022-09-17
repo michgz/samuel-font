@@ -294,6 +294,11 @@ pen = None
 
 # Minim up
 
+X, Y = None, None
+for A in F['uniE0A3'].anchorPoints:
+    if A[0] == 'stemUpSE' and A[1] == 'base':
+        X, Y = A[2], A[3]
+
 # Notehead with stem up
 C = F.createChar(0xE1D3, "uniE1D3")
 pen = C.glyphPen()
@@ -397,6 +402,11 @@ for _, flag_count, uni in FLAGS_DOWN:
 
 
 # Minim
+
+X, Y = None, None
+for A in F['uniE0A3'].anchorPoints:
+    if A[0] == 'stemDownNW' and A[1] == 'base':
+        X, Y = A[2], A[3]
 
 # Minim with stem down
 C = F.createChar(0xE1D4, "uniE1D4")
