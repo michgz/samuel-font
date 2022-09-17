@@ -22,7 +22,7 @@ OS2Version: 4
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 1
 CreationTime: 1388334579
-ModificationTime: 1663411185
+ModificationTime: 1663439922
 PfmFamily: 17
 TTFWeight: 500
 TTFWidth: 5
@@ -65,7 +65,7 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 0
 FitToEm: 0
-WinInfo: 57936 51 14
+WinInfo: 57885 51 14
 BeginPrivate: 7
 BlueValues 89 [-512.5 -487.5 -262.5 -237.5 -12.5 12.5 237.5 262.5 487.5 512.5 737.5 762.5 987.5 1012.5]
 OtherBlues 11 [-146 -146]
@@ -75,5 +75,5 @@ StdVW 4 [33]
 StemSnapH 31 [22 32 50 65 70 88 107 135 225]
 StemSnapV 16 [15 28 33 37 50]
 EndPrivate
-AnchorClass2: "stemUpSE"""  "stemDownNW""" 
+AnchorClass2: "cutOutNE"""  "stemUpSE"""  "stemDownNW""" 
 EndSplineFont
