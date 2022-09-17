@@ -341,7 +341,7 @@ for _, uni, uni_flag in NOTES_UP:
     # Notehead with stem up
     C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
     pen = C.glyphPen()
-    F[GlyphName(0xE04A)].draw(pen)
+    F[GlyphName(0xE0A4)].draw(pen)
     if uni_flag:
         try:
             F[GlyphName(int(uni_flag, 16))].draw(pen)       
@@ -738,10 +738,10 @@ S += """
 
 D['engravingDefaults'].update({'textFontFamily': ['serif']})
 
-D['engravingDefaults'].update({'beamSpacing': DEFAULT['beamSpacing']/250.0})
-D['engravingDefaults'].update({'beamThickness': DEFAULT['beamThickness']/250.0})
-D['engravingDefaults'].update({'staffLineThickness': DEFAULT['staffLineThickness']/250.0})
-D['engravingDefaults'].update({'stemThickness': DEFAULT['stemThickness']/250.0})
+D['engravingDefaults'].update({'beamSpacing': DEFAULTS['beamSpacing']/250.0})
+D['engravingDefaults'].update({'beamThickness': DEFAULTS['beamThickness']/250.0})
+D['engravingDefaults'].update({'staffLineThickness': DEFAULTS['staffLineThickness']/250.0})
+D['engravingDefaults'].update({'stemThickness': DEFAULTS['stemThickness']/250.0})
 
 		# "arrowShaftThickness":0.16,
 		# "barlineSeparation":0.4,
