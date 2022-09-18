@@ -621,6 +621,17 @@ C.right_side_bearing = 0
 C.autoHint()
 pen=None
 
+# Reverse the quaver rest to get an "old" crotchet
+
+C = F.createChar(0xE4F2, GlyphName(0xE4F2))
+pen = C.glyphPen()
+F[GlyphName(0xE4E6)].draw(pen)
+C.transform( (-1,0,0,1,0,0) )  # reverse X direction, keep Y direction.
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
+pen = None
+
 F.save("samuel-12.sfd")
 """
 
