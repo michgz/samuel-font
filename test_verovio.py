@@ -19,7 +19,7 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
-              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 30},   \
+              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 110},   \
               "restLonga": {"w": 210},   \
               "rest": {"w": 368, "h": 125},    \
           }

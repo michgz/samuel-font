@@ -4,7 +4,7 @@
   <identification>
     <encoding>
       <software>MuseScore 2.3.2</software>
-      <encoding-date>2022-09-17</encoding-date>
+      <encoding-date>2022-09-18</encoding-date>
       <supports element="accidental" type="yes"/>
       <supports element="beam" type="yes"/>
       <supports element="print" attribute="new-page" type="yes" value="yes"/>
@@ -52,12 +52,12 @@
       </score-part>
     </part-list>
   <part id="P1">
-    <measure number="1" width="425.66">
+    <measure number="1" width="584.97">
       <print>
         <system-layout>
           <system-margins>
-            <left-margin>0.00</left-margin>
-            <right-margin>651.50</right-margin>
+            <left-margin>-0.00</left-margin>
+            <right-margin>0.00</right-margin>
             </system-margins>
           <top-system-distance>170.00</top-system-distance>
           </system-layout>
@@ -87,7 +87,7 @@
         <accidental>natural</accidental>
         <stem>up</stem>
         </note>
-      <note default-x="207.28" default-y="-40.00">
+      <note default-x="256.84" default-y="-40.00">
         <pitch>
           <step>E</step>
           <octave>4</octave>
@@ -99,7 +99,7 @@
         <beam number="1">begin</beam>
         <beam number="2">begin</beam>
         </note>
-      <note default-x="242.24" default-y="-35.00">
+      <note default-x="309.51" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
@@ -112,7 +112,7 @@
         <beam number="1">continue</beam>
         <beam number="2">continue</beam>
         </note>
-      <note default-x="277.21" default-y="-30.00">
+      <note default-x="362.17" default-y="-30.00">
         <pitch>
           <step>G</step>
           <alter>1</alter>
@@ -125,7 +125,7 @@
         <beam number="1">continue</beam>
         <beam number="2">continue</beam>
         </note>
-      <note default-x="312.17" default-y="-25.00">
+      <note default-x="414.84" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -137,7 +137,7 @@
         <beam number="1">end</beam>
         <beam number="2">end</beam>
         </note>
-      <note default-x="347.14" default-y="-20.00">
+      <note default-x="467.50" default-y="-20.00">
         <pitch>
           <step>B</step>
           <octave>4</octave>
@@ -150,6 +150,41 @@
           <fermata type="upright"/>
           </notations>
         </note>
+      </measure>
+    <measure number="2" width="492.20">
+      <note>
+        <rest/>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>half</type>
+        </note>
+      <note default-x="216.92" default-y="-30.00">
+        <pitch>
+          <step>G</step>
+          <alter>-1</alter>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <accidental>flat</accidental>
+        <stem>up</stem>
+        </note>
+      <note default-x="344.99" default-y="-35.00">
+        <pitch>
+          <step>F</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <accidental>natural</accidental>
+        <stem>up</stem>
+        </note>
+      <barline location="right">
+        <bar-style>light-heavy</bar-style>
+        <repeat direction="backward"/>
+        </barline>
       </measure>
     </part>
   </score-partwise>
