@@ -670,7 +670,7 @@ def CreateVerovioFont(src, name, dstdir):
                   else:
                       f2.write('>\\n')
                       for ANCHOR in GLIF.anchorPoints:
-                          f2.write('    <a n="{0}" x="{2:0.1f}" y="{3:0.1f}"/>\\n'.format(*ANCHOR))
+                          f2.write('    <a n="{0}" x="{2:0.1f}" y="{3:0.1f}"/>\\n'.format(ANCHOR[0], ANCHOR[1], ANCHOR[2]/250.0, ANCHOR[3]/250.0))
                       f2.write('  </g>\\n')
               f2.write('</bounding-boxes>\\n')
           """))
