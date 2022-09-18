@@ -1062,5 +1062,5 @@ V.renderToSVGFile('test1out.svg')
 P_IN = pathlib.Path.cwd().resolve().joinpath("test1out.svg")
 P_OUT = pathlib.Path.cwd().resolve().joinpath("test1out.png")
 
-subprocess.run(['inkscape', '-o', str(P_OUT), '--export-overwrite', '--export-type=png', '--export-area={0}:{1}:{2}:{3}'.format(0, 0, 1000, 500), '--export-background=white', str(P_IN)])
+subprocess.run(['inkscape', '-o', str(P_OUT), '--export-overwrite', '--export-type=png', '--export-area={0}:{1}:{2}:{3}'.format(0, 0, 1600, 500), '--export-background=white', str(P_IN)])
 
