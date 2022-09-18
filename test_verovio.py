@@ -24,6 +24,7 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "rest": {"w": 368, "h": 125},    \
               "staff": {"narrow": 200, "mid": 300, "wide": 400},     \
               "leger": {"narrow": 200, "mid": 300, "wide": 400},     \
+              "dot_diameter": 70,       \
           }
 
 
@@ -240,6 +241,11 @@ DrawCircle(pen, X, 125+3*250, DEFAULTS["barlines"]["repeat_diameter"]/2)
 pen = None
 
 
+#Augmentation dot (used for dotted notes)
+C = F.createChar(0xE1E7, GlyphName(0xE1E7))
+pen = C.glyphPen()
+DrawCircle(pen, 0, 0, DEFAULTS["dot_diameter"]/2)
+pen = None
 
 
 X, Y = None, None
