@@ -286,6 +286,10 @@ for _, flag_count, uni in FLAGS_UP:
         pen.closePath()
 
         C.removeOverlap()
+
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
     pen = None
 
 
@@ -353,6 +357,9 @@ for _, uni, uni_flag in NOTES_UP:
     pen.lineTo((X,Y+DEFAULTS["stemHeight"]))
     pen.closePath()
     C.removeOverlap()
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
     pen = None
 
 
@@ -407,6 +414,10 @@ for _, flag_count, uni in FLAGS_DOWN:
         pen.closePath()
         
         C.removeOverlap()
+
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
     pen = None
 
 
@@ -428,6 +439,9 @@ pen.lineTo((X+DEFAULTS["stemThickness"],Y-DEFAULTS["stemHeight"]))
 pen.lineTo((X,Y-DEFAULTS["stemHeight"]))
 pen.closePath()
 C.removeOverlap()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
 pen = None
 
 
@@ -461,6 +475,9 @@ for _, uni, uni_flag in NOTES_DOWN:
     pen.lineTo((X,Y-DEFAULTS["stemHeight"]))
     pen.closePath()
     C.removeOverlap()
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
     pen = None
       
 

@@ -1,7 +1,7 @@
 StartChar: noteheadBlack
 Encoding: 57508 57508 7
 Width: 374
-Flags: HWO
+Flags: HW
 AnchorPoint: "stemUpSE" 373 35 basechar 0
 AnchorPoint: "stemDownNW" 1 -30 basechar 0
 LayerCount: 2
