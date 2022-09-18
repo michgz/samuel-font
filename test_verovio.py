@@ -22,6 +22,8 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 110},   \
               "restLonga": {"w": 210},   \
               "rest": {"w": 368, "h": 125},    \
+              "staff": {"narrow": 200, "mid": 300, "wide": 400},     \
+              "leger": {"narrow": 200, "mid": 300, "wide": 400},     \
           }
 
 
@@ -645,6 +647,88 @@ if NEW_CROTCHET is not None:
     C.right_side_bearing = int(F[GlyphName(NEW_CROTCHET)].right_side_bearing)
     C.autoHint()
     pen = None
+
+
+# Staves (only the 5-line ones and leger lines)
+
+C = F.createChar(0xE014, GlyphName(0xE014))
+pen = C.glyphPen()
+for Y in [0, 250, 500, 750, 1000]:
+    pen.moveTo((0,Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["staff"]["mid"],Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["staff"]["mid"],Y-DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((0,Y-DEFAULTS["staffLineThickness"]/2))
+    pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
+pen = None
+
+C = F.createChar(0xE020, GlyphName(0xE020))
+pen = C.glyphPen()
+for Y in [0, 250, 500, 750, 1000]:
+    pen.moveTo((0,Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["staff"]["narrow"],Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["staff"]["narrow"],Y-DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((0,Y-DEFAULTS["staffLineThickness"]/2))
+    pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
+pen = None
+
+C = F.createChar(0xE01A, GlyphName(0xE01A))
+pen = C.glyphPen()
+for Y in [0, 250, 500, 750, 1000]:
+    pen.moveTo((0,Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["staff"]["wide"],Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["staff"]["wide"],Y-DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((0,Y-DEFAULTS["staffLineThickness"]/2))
+    pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
+pen = None
+
+
+C = F.createChar(0xE022, GlyphName(0xE022))
+pen = C.glyphPen()
+for Y in [0]:
+    pen.moveTo((0,Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["leger"]["mid"],Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["leger"]["mid"],Y-DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((0,Y-DEFAULTS["staffLineThickness"]/2))
+    pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
+pen = None
+
+C = F.createChar(0xE024, GlyphName(0xE024))
+pen = C.glyphPen()
+for Y in [0]:
+    pen.moveTo((0,Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["leger"]["narrow"],Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["leger"]["narrow"],Y-DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((0,Y-DEFAULTS["staffLineThickness"]/2))
+    pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
+pen = None
+
+C = F.createChar(0xE013, GlyphName(0xE013))
+pen = C.glyphPen()
+for Y in [0]:
+    pen.moveTo((0,Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["leger"]["wide"],Y+DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((DEFAULTS["leger"]["wide"],Y-DEFAULTS["staffLineThickness"]/2))
+    pen.lineTo((0,Y-DEFAULTS["staffLineThickness"]/2))
+    pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
+pen = None
 
 F.save("samuel-12.sfd")
 """
