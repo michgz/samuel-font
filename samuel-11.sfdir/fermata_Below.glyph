@@ -2,7 +2,7 @@ StartChar: fermataBelow
 Encoding: 58561 58561 35
 Width: 713
 VWidth: 0
-Flags: HWO
+Flags: HW
 HStem: -286 74<211.833 502.649> -97 96<310.545 403.455>
 VStem: 301 112<-86.6049 -11.3951>
 LayerCount: 2
