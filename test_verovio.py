@@ -25,6 +25,8 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "staff": {"narrow": 200, "mid": 300, "wide": 400},     \
               "leger": {"narrow": 200, "mid": 300, "wide": 400},     \
               "dot_diameter": 70,       \
+              # overlap is how much beyond the period to extend the stem
+              "quaver_rest": {"period": 250, "overlap": 55},    \
           }
 
 
@@ -755,6 +757,78 @@ C.left_side_bearing = 0
 C.right_side_bearing = 0
 C.autoHint()
 pen = None
+
+
+
+# Now do the fraction-of-quaver rests. This needs quite a bit of calculation.
+
+# First, find the NE and SE corners of the glyph. These will determine the slope of additional
+# segments
+NE = None
+SE = None
+GLIF = F[GlyphName(0xE4E6)]
+for CONTOUR in GLIF.foreground:
+    for POINT in CONTOUR:
+        if NE is None:
+            NE = (POINT.x, POINT.y)
+        else:
+            if POINT.x+POINT.y > NE[0]+NE[1]:
+                NE = (POINT.x, POINT.y)
+        if SE is None:
+            SE = (POINT.x, POINT.y)
+        else:
+            if POINT.x-POINT.y > SE[0]-SE[1]:
+                SE = (POINT.x, POINT.y)
+
+DELTA_Y = float(DEFAULTS["quaver_rest"]["period"])
+
+
+DELTA_X = DELTA_Y * (NE[0] - SE[0]) / (NE[1] - SE[1])
+
+
+QUAVERS = [(0xE4E7, 1),
+           (0xE4E8, 2),
+           (0xE4E9, 3),
+           (0xE4EA, 4),
+           (0xE4EB, 5),
+           (0xE4EC, 6),
+           (0xE4ED, 7)]
+
+for Q in QUAVERS:
+
+    # Now create the layer to repeat
+
+    L = GLIF.foreground
+    (xa, ya, xb, yb) = L.boundingBox()
+
+
+    # Add a contour, which specifies the intersection
+
+    ya = yb - DEFAULTS["quaver_rest"]["period"] - DEFAULTS["quaver_rest"]["overlap"]
+
+    R = fontforge.contour()
+    R.moveTo(xa, ya)
+    R.lineTo(xa, yb)
+    R.lineTo(xb, yb)
+    R.lineTo(xb, ya)
+    R.closed = True
+    L += R
+
+    # Intersect with the new contour
+    L.intersect()
+
+    C = F.createChar(Q[0], GlyphName(Q[0]))
+    P = C.glyphPen()
+    F[GlyphName(0xE4E6)].draw(P)
+    for _ in range(Q[1]):
+        L.transform((1,0,0,1,DELTA_X,DELTA_Y))
+        L.draw(P)
+    C.removeOverlap()
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
+    P = None
+
 
 F.save("samuel-12.sfd")
 """
