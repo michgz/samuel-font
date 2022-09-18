@@ -632,6 +632,20 @@ C.right_side_bearing = 0
 C.autoHint()
 pen = None
 
+# Now, optionally replace the crotchet with another style.
+#NEW_CROTCHET = 0xE4F2
+#NEW_CROTCHET = 0xE4F6
+NEW_CROTCHET = None
+if NEW_CROTCHET is not None:
+    F.removeGlyph(0xE4E5)
+    C = F.createChar(0xE4E5, "restQuarter")
+    pen = C.glyphPen()
+    F[GlyphName(NEW_CROTCHET)].draw(pen)
+    C.left_side_bearing = int(F[GlyphName(NEW_CROTCHET)].left_side_bearing)
+    C.right_side_bearing = int(F[GlyphName(NEW_CROTCHET)].right_side_bearing)
+    C.autoHint()
+    pen = None
+
 F.save("samuel-12.sfd")
 """
 
