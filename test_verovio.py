@@ -717,7 +717,7 @@ C.right_side_bearing = 0
 C.autoHint()
 pen = None
 
-C = F.createChar(0xE013, GlyphName(0xE013))
+C = F.createChar(0xE023, GlyphName(0xE023))
 pen = C.glyphPen()
 for Y in [0]:
     pen.moveTo((0,Y+DEFAULTS["staffLineThickness"]/2))
@@ -725,6 +725,26 @@ for Y in [0]:
     pen.lineTo((DEFAULTS["leger"]["wide"],Y-DEFAULTS["staffLineThickness"]/2))
     pen.lineTo((0,Y-DEFAULTS["staffLineThickness"]/2))
     pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
+pen = None
+
+# Rest + leger line combinations
+
+C = F.createChar(0xE4F4, GlyphName(0xE4F4))
+pen = C.glyphPen()
+F[GlyphName(0xE4E3)].draw(pen)
+F[GlyphName(0xE022)].draw(pen)
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
+pen = None
+
+C = F.createChar(0xE4F5, GlyphName(0xE4F5))
+pen = C.glyphPen()
+F[GlyphName(0xE4E4)].draw(pen)
+F[GlyphName(0xE022)].draw(pen)
 C.left_side_bearing = 0
 C.right_side_bearing = 0
 C.autoHint()
