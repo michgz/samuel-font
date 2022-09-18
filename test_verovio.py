@@ -575,38 +575,50 @@ pen = None
 # Rests
 C = F.createChar(0xE4E1, GlyphName(0xE4E1))
 pen = C.glyphPen()
-pen.moveTo((0,750))
-pen.lineTo((DEFAULTS["restLonga"]["w"],750))
-pen.lineTo((DEFAULTS["restLonga"]["w"],250))
-pen.lineTo((0,250))
+pen.moveTo((0,500))
+pen.lineTo((DEFAULTS["restLonga"]["w"],500))
+pen.lineTo((DEFAULTS["restLonga"]["w"],0))
+pen.lineTo((0,0))
 pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
 pen=None
 
 C = F.createChar(0xE4E2, GlyphName(0xE4E2))
 pen = C.glyphPen()
-pen.moveTo((0,750))
-pen.lineTo((DEFAULTS["restLonga"]["w"],750))
-pen.lineTo((DEFAULTS["restLonga"]["w"],500))
-pen.lineTo((0,500))
+pen.moveTo((0,250))
+pen.lineTo((DEFAULTS["restLonga"]["w"],250))
+pen.lineTo((DEFAULTS["restLonga"]["w"],0))
+pen.lineTo((0,0))
 pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
 pen=None
 
 C = F.createChar(0xE4E3, GlyphName(0xE4E3))
 pen = C.glyphPen()
-pen.moveTo((0,500))
-pen.lineTo((DEFAULTS["rest"]["w"],500))
-pen.lineTo((DEFAULTS["rest"]["w"],500-DEFAULTS["rest"]["h"]))
-pen.lineTo((0,500-DEFAULTS["rest"]["h"]))
+pen.moveTo((0,0))
+pen.lineTo((DEFAULTS["rest"]["w"],0))
+pen.lineTo((DEFAULTS["rest"]["w"],0-DEFAULTS["rest"]["h"]))
+pen.lineTo((0,0-DEFAULTS["rest"]["h"]))
 pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
 pen=None
 
 C = F.createChar(0xE4E4, GlyphName(0xE4E4))
 pen = C.glyphPen()
-pen.moveTo((0,500+DEFAULTS["rest"]["h"]))
-pen.lineTo((DEFAULTS["rest"]["w"],500+DEFAULTS["rest"]["h"]))
-pen.lineTo((DEFAULTS["rest"]["w"],500))
-pen.lineTo((0,500))
+pen.moveTo((0,0+DEFAULTS["rest"]["h"]))
+pen.lineTo((DEFAULTS["rest"]["w"],0+DEFAULTS["rest"]["h"]))
+pen.lineTo((DEFAULTS["rest"]["w"],0))
+pen.lineTo((0,0))
 pen.closePath()
+C.left_side_bearing = 0
+C.right_side_bearing = 0
+C.autoHint()
 pen=None
 
 F.save("samuel-12.sfd")

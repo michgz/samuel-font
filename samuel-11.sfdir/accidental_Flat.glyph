@@ -1,7 +1,7 @@
 StartChar: accidentalFlat
 Encoding: 57952 57952 13
 Width: 186
-Flags: HWO
+Flags: HW
 HStem: 98 46<28.843 118.955>
 VStem: 0 28<-101 95.474 126 324> 125 61<-12.4075 92.3807>
 AnchorPoint: "stemUpSE" 29 144 basechar 0
