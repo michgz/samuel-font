@@ -952,5 +952,7 @@ def build_font(in_path, out_path):
 
 
 if __name__ == "__main__":
-    build_font(pathlib.Path("samuel-11.sfdir", "samuel-12.sfd"))
+    if len(sys.argv) < 3:
+        sys.exit(-1)
+    build_font(pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2]))
 

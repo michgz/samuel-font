@@ -1,23 +1,14 @@
 
-# Installed using:
-#     pip install fonttools
-#
-FONTTOOLS_TTX = fonttools ttx
-RM = rm -rf
 PYTHON = python
-FONTFORGE = fontforge
-CP = cp -f
 
-clean:
-	$(RM) test.pdf
-	$(RM) ./samuel-*.otf
-	$(RM) ~/.fonts/samuel-*.otf
-	# Note: the following line needs "sudo" privileges.
-	$(RM) /usr/local/lilypond/usr/share/lilypond/current/fonts/otf/samuel-*.otf
+all: test_verovio samuel-12.sfd
 
-all:
-	$(FONTFORGE) --lang=py -script make_for_lilypond.py
-	$(CP) samuel-*.otf ~/.fonts
-	# Note: the following line needs "sudo" privileges.
-	$(CP) samuel-*.otf /usr/local/lilypond/usr/share/lilypond/current/fonts/otf
-	lilypond -o test lp/test.ly
+samuel-12.sfd: src/build_font.py
+	$(PYTHON) src/build_font.py samuel-11.sfdir samuel-12.sfd
+
+test_verovio: src/test_verovio.py samuel-12.sfd
+	$(PYTHON) src/test_verovio.py samuel-12.sfd
+
+
+.PHONY:
+	test_verovio
