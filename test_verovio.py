@@ -387,6 +387,13 @@ for A in F[GlyphName(0xE0A4)].anchorPoints:
     if A[0] == 'stemDownNW' and A[1] == 'base':
         X, Y = A[2], A[3]
         
+     
+# Override the X, Y defined above. At least for Verovio, the stemDownSW point needs to
+# be near (0,0)
+X = 0
+Y = DEFAULTS["stemHeight"]
+     
+     
         
 
 # Now do all the down flags
@@ -433,6 +440,7 @@ for _, flag_count, uni in FLAGS_DOWN:
 
     C.left_side_bearing = 0
     C.right_side_bearing = 0
+    C.addAnchorPoint("stemDownSW", "base", X, Y-DEFAULTS["stemHeight"])
     C.autoHint()
     pen = None
 
