@@ -256,6 +256,11 @@ for A in F[GlyphName(0xE0A4)].anchorPoints:
         X, Y = A[2], A[3]
 
 
+# Override the X, Y defined above. At least for Verovio, the stemUpNW point needs to
+# be near (0,0)
+X = 0
+Y = -DEFAULTS["stemHeight"]
+
 # Now do all the up flags
 FLAGS_UP = [
     ("flag8thUp", 1, "E240"),
@@ -299,6 +304,7 @@ for _, flag_count, uni in FLAGS_UP:
 
     C.left_side_bearing = 0
     C.right_side_bearing = 0
+    C.addAnchorPoint("stemUpNW", "base", X, Y+DEFAULTS["stemHeight"])
     C.autoHint()
     pen = None
 
@@ -828,7 +834,6 @@ for Q in QUAVERS:
     C.right_side_bearing = 0
     C.autoHint()
     P = None
-
 
 F.save("samuel-12.sfd")
 """
