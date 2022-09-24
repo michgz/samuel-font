@@ -1,7 +1,7 @@
 
 PYTHON = python
 
-all: test_verovio samuel-12.sfd otf
+all: test_verovio samuel-12.sfd
 
 otf: samuel-12.sfd src/build_otf.py _build
 	$(PYTHON) src/build_otf.py
