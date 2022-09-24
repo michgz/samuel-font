@@ -947,7 +947,7 @@ def build_font(in_path, out_path):
     """.format("samuel-metadata.json")
 
     with open('s7.py', 'w') as f_scr:
-        f_scr.write(S)
+        f_scr.write(textwrap.dedent(S))
     subprocess.run(['fontforge', '--script', 's7.py'])
 
 
