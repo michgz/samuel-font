@@ -2,7 +2,7 @@
 PYTHON = python
 MKDIR = mkdir
 
-all: test_verovio samuel-12.sfd
+all: test_pillow samuel-12.sfd
 
 otf: samuel-12.sfd src/build_otf.py _build
 	$(MKDIR) _build/otf
@@ -14,7 +14,10 @@ samuel-12.sfd: src/build_font.py
 test_verovio: src/test_verovio.py samuel-12.sfd
 	$(PYTHON) src/test_verovio.py samuel-12.sfd
 
+test_pillow:
+	$(PYTHON) src/test_pillow.py
+
 _build:
 	$(MKDIR) _build
 
-.PHONY: test_verovio otf
+.PHONY: test_verovio test_pillow otf
