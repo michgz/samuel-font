@@ -15,7 +15,7 @@ test_verovio: src/test_verovio.py samuel-12.sfd
 	$(PYTHON) src/test_verovio.py samuel-12.sfd
 
 test_pillow:
-	$(PYTHON) src/test_pillow.py
+	$(PYTHON) src/test_pillow.py _build/otf/samuel-14.otf
 
 _build:
 	$(MKDIR) _build
