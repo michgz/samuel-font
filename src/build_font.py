@@ -34,8 +34,6 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
 def build_font(in_path, out_path):
 
     S = """
-    DEFAULTS = {0}
-    """.format(str(DEFAULTS)) +  """
     import fontforge
     import json
     import pathlib
@@ -854,6 +852,7 @@ def build_font(in_path, out_path):
 
 
     with open('s2.py', 'w') as f_scr:
+        f_scr.write("DEFAULTS = {0}".format(str(DEFAULTS)))
         f_scr.write(textwrap.dedent(S))
     subprocess.run(['fontforge', '--script', 's2.py'])
 
@@ -861,7 +860,7 @@ def build_font(in_path, out_path):
     # Create a SMuFL metadata file
 
 
-    S = "DEFAULTS = {0}".format(str(DEFAULTS))
+    S = ""
     S += """
 
     import json
@@ -870,8 +869,9 @@ def build_font(in_path, out_path):
     D = {}
 
     """
-    S += "D.update({'fontName': " + '"{0}"'.format(__NAME__) + "})\n"
-    S += "D.update({'fontVersion': " + '"{0}"'.format(__VERSION__) + "})\n"
+    
+    S += "\n    D.update({'fontName': " + '"{0}"'.format(__NAME__) + "})\n"
+    S += "    D.update({'fontVersion': " + '"{0}"'.format(__VERSION__) + "})\n"
 
     S += """
     D.update({'engravingDefaults': {}})
@@ -947,6 +947,7 @@ def build_font(in_path, out_path):
     """.format("samuel-metadata.json")
 
     with open('s7.py', 'w') as f_scr:
+        f_scr.write("DEFAULTS = {0}".format(str(DEFAULTS)))
         f_scr.write(textwrap.dedent(S))
     subprocess.run(['fontforge', '--script', 's7.py'])
 
