@@ -939,12 +939,14 @@ def build_font(in_path, out_path):
 
     """
 
+    out_metadata = out_path.parent.joinpath(out_path.stem + "-metadata.json")
+
     S += """
 
     with open("{0}", "w") as f:
         json.dump(D, f, indent = "\t")
 
-    """.format("samuel-metadata.json")
+    """.format(str(out_metadata))
 
     with open('s7.py', 'w') as f_scr:
         f_scr.write("DEFAULTS = {0}".format(str(DEFAULTS)))

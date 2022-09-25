@@ -13,7 +13,9 @@ otf: samuel-12.sfd src/build_otf.py _build
 	$(RM) _build/otf
 	$(MKDIR) _build/otf
 	$(PYTHON) src/build_otf.py samuel-12.sfd _build/otf/$(FONT_NAME_LOWCASE)-14.otf
+	$(COPY) samuel-12-metadata.json _build/otf/$(FONT_NAME_LOWCASE)-metadata.json
 	$(COPY) _build/otf/$(FONT_NAME_LOWCASE)-14.otf font/$(FONT_NAME_LOWCASE).otf
+	$(COPY) _build/otf/$(FONT_NAME_LOWCASE)-metadata.json font/
 
 samuel-12.sfd: src/build_font.py samuel-11.sfdir
 	$(PYTHON) src/build_font.py samuel-11.sfdir samuel-12.sfd
