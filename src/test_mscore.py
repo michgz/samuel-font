@@ -38,7 +38,8 @@ else:
     os.mkdir(P.joinpath("mscore_build"))
 os.chdir(P.joinpath("mscore_build"))
 
-subprocess.run(["git", "clone", "https://github.com/musescore/MuseScore", "T", "-b", "v3.6.2"])
+TAG_DEFINITION = ["-b", "v3.6.2"]
+subprocess.run(["git", "clone", "https://github.com/musescore/MuseScore", "T"] + TAG_DEFINITION)
 
 os.chdir(P.joinpath("mscore_build", "T"))
 
@@ -49,7 +50,7 @@ os.chdir(P.joinpath("mscore_build", "_build"))
 # Point to our install directory
 CMAKE_OPTIONS = ["-DCMAKE_INSTALL_PREFIX={0}".format(str(pathlib.Path("..", "_install")))]
 # Turn off a bunch of things we don't need
-CMAKE_OPTIONS += ["-DBUILD_ALSA=OFF", "-DBUILD_JACK=OFF", "-DBUILD_LAME=ON", "-DBUILD_PORTAUDIO=OFF", "-DBUILD_PORTMIDI=OFF", "-DBUILD_PULSEAUDIO=OFF", "-DBUILD_TELEMETRY_MODULE=OFF", "-DUSE_SYSTEM_FREETYPE=ON"]
+CMAKE_OPTIONS += ["-DBUILD_ALSA=OFF", "-DBUILD_JACK=OFF", "-DBUILD_LAME=ON", "-DBUILD_PORTAUDIO=OFF", "-DBUILD_PORTMIDI=OFF", "-DBUILD_PULSEAUDIO=OFF", "-DBUILD_TELEMETRY_MODULE=OFF", "-DUSE_SYSTEM_FREETYPE=OFF"]
 subprocess.run(["cmake", str(pathlib.Path("..", "T"))] + CMAKE_OPTIONS)
 
 subprocess.run(["cmake", "--build"])
