@@ -1,0 +1,14 @@
+StartChar: articStaccatoAbove
+Encoding: 58530 58530 66
+Width: 51
+Flags: HW
+LayerCount: 2
+Fore
+SplineSet
+0 44 m 3
+ 0 58 13 67 27 67 c 3
+ 38 67 51 57.0332963784 51 42 c 7
+ 51 25.9687804581 41 16 28 16 c 3
+ 13 16 0 29 0 44 c 3
+EndSplineSet
+EndChar

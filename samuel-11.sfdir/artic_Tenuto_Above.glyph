@@ -1,0 +1,14 @@
+StartChar: articTenutoAbove
+Encoding: 58532 58532 67
+Width: 387
+Flags: HWO
+LayerCount: 2
+Fore
+SplineSet
+0 0 m 1
+ 0 31 l 1
+ 387 31 l 1
+ 387 0 l 1
+ 0 0 l 1
+EndSplineSet
+EndChar
