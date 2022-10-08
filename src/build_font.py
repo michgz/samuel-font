@@ -17,6 +17,7 @@ __VERSION__ = "0.0.1"
 
 DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   \
               'beamSpacing': 25,   'beamThickness': 100,   \
+              # "flags" applies specifically to Straight flags (variant glyphs).
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
@@ -264,21 +265,21 @@ def build_font(in_path, out_path):
     X = 0
     Y = -DEFAULTS["stemHeight"]
 
-    # Now do all the up flags
+    # Now do all the up flags (straight variants)
     FLAGS_UP = [
-        ("flag8thUp", 1, "E240"),
-        ("flag16thUp", 2, "E242"),
-        ("flag32ndUp", 3, "E244"),
-        ("flag64thUp", 4, "E246"),
-        ("flag128thUp", 5, "E248"),
-        ("flag256thUp", 6, "E24A"),
-        ("flag512thUp", 7, "E24C"),
-        ("flag1024thUp", 8, "E24E")]
+        ("flag8thUpStraight", 1, "F410"),
+        ("flag16thUpStraight", 2, "F411"),
+        ("flag32ndUpStraight", 3, "F412"),
+        ("flag64thUpStraight", 4, "F413"),
+        ("flag128thUpStraight", 5, "F414"),
+        ("flag256thUpStraight", 6, "F415"),
+        ("flag512thUpStraight", 7, "F416"),
+        ("flag1024thUpStraight", 8, "F417")]
 
 
-    for _, flag_count, uni in FLAGS_UP:
+    for glyph_name, flag_count, uni in FLAGS_UP:
 
-        C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
+        C = F.createChar(int(uni, 16), glyph_name))
         pen = C.glyphPen()
         
         # Quavers and semiquavers use the standard stem height. After that, need to
@@ -315,9 +316,9 @@ def build_font(in_path, out_path):
 
     #flagInternalUp
 
-    C = F.createChar(0xE250, GlyphName(0xE250))
+    C = F.createChar(0xF418, "flagInternalUpStraight")  # This name doesn't exist in the SMuFL standard!
     pen = C.glyphPen()
-    F[GlyphName(0xE240)].draw(pen)
+    F["flag8thUpStraight"].draw(pen)
     pen = None
 
 
@@ -399,21 +400,21 @@ def build_font(in_path, out_path):
          
             
 
-    # Now do all the down flags
+    # Now do all the down flags (straight variants)
     FLAGS_DOWN = [
-        ("flag8thDown", 1, "E241"),
-        ("flag16thDown", 2, "E243"),
-        ("flag32ndDown", 3, "E245"),
-        ("flag64thDown", 4, "E247"),
-        ("flag128thDown", 5, "E249"),
-        ("flag256thDown", 6, "E24B"),
-        ("flag512thDown", 7, "E24D"),
-        ("flag1024thDown", 8, "E24F")]
+        ("flag8thDownStraight", 1, "F419"),
+        ("flag16thDownStraight", 2, "F41A"),
+        ("flag32ndDownStraight", 3, "F41B"),
+        ("flag64thDownStraight", 4, "F41C"),
+        ("flag128thDownStraight", 5, "F41D"),
+        ("flag256thDownStraight", 6, "F41E"),
+        ("flag512thDownStraight", 7, "F41F"),
+        ("flag1024thDownStraight", 8, "F420")]
 
 
-    for _, flag_count, uni in FLAGS_DOWN:
+    for glyph_name, flag_count, uni in FLAGS_DOWN:
 
-        C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
+        C = F.createChar(int(uni, 16), glyph_name))
         pen = C.glyphPen()
         
         # Quavers and semiquavers use the standard stem height. After that, need to
@@ -510,9 +511,9 @@ def build_font(in_path, out_path):
 
     #flagInternalDown
 
-    C = F.createChar(0xE251, GlyphName(0xE251))
+    C = F.createChar(0xF421, "flagInternalDownStraight")   # This name doesn't exist in the SMuFL standard!
     pen = C.glyphPen()
-    F[GlyphName(0xE241)].draw(pen)
+    F["flag8thDownStraight"].draw(pen)
     pen = None
 
 
