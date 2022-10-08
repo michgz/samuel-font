@@ -1,7 +1,7 @@
-StartChar: flags.variant1
-Encoding: 62468 62468 25
+StartChar: flagInternalDown
+Encoding: 57937 57937 67
 Width: 1000
-Flags: H
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
