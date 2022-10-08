@@ -845,6 +845,26 @@ def build_font(in_path, out_path):
         C.right_side_bearing = 0
         C.autoHint()
         P = None
+
+
+    # Turn all the "above" articulations upside down to form the "below" articulations.
+    
+    
+    ARTICS = [(0xE4A1, "articAccentBelow"),
+              (0xE4A3, "articStaccatoBelow"),
+              (0xE4A5, "articTenutoBelow"),
+              (0xE4A7, "articStaccatissimoBelow")]
+              
+    for A in ARTICS:
+        C = F.createChar(A[0], GlyphName(A[0]))
+        P = C.glyphPen()
+        F[GlyphName(A[0] - 1)].draw(P)   # the "Above" variant is always 1 less
+        C.transform((1,0,0,-1,0,0))    # Reflect around the x axis
+        C.left_side_bearing = 0
+        C.right_side_bearing = 0
+        C.autoHint()
+        P = None
+        
     """ + \
     """
     F.save("{0}")
