@@ -29,7 +29,7 @@ def test_pillow(in_otf):
         DD = ImageDraw.Draw(II)
         font = ImageFont.truetype(str(in_otf), size=64)
         for I, Uni in enumerate(range(0xE240, 0xE250, 2)):   # Up flags
-            DD.text((20 + 70*I, 40), struct.pack("<H", Uni).decode('UTF-16LE'), font=font)
+            DD.text((20 + 70*I, 140), struct.pack("<H", Uni).decode('UTF-16LE'), font=font)
         for I, Uni in enumerate(range(0xE241, 0xE250, 2)):   # Down flags
             DD.text((20 + 70*I, 240), struct.pack("<H", Uni).decode('UTF-16LE'), font=font)
 

@@ -19,6 +19,8 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               'beamSpacing': 25,   'beamThickness': 100,   \
               # "flags" applies specifically to Straight flags (variant glyphs).
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
+              # "flags_c" is the curvy (non-variant) flags.
+              "flags_c": {"voffset": 190},    \
               "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 110},   \
@@ -279,7 +281,7 @@ def build_font(in_path, out_path):
 
     for glyph_name, flag_count, uni in FLAGS_UP:
 
-        C = F.createChar(int(uni, 16), glyph_name))
+        C = F.createChar(int(uni, 16), glyph_name)
         pen = C.glyphPen()
         
         # Quavers and semiquavers use the standard stem height. After that, need to
@@ -314,13 +316,69 @@ def build_font(in_path, out_path):
 
 
 
-    #flagInternalUp
+    #flagInternalUp (straight variant)
 
     C = F.createChar(0xF418, "flagInternalUpStraight")  # This name doesn't exist in the SMuFL standard!
     pen = C.glyphPen()
     F["flag8thUpStraight"].draw(pen)
     pen = None
 
+
+    # flag internal up is a reflection of the down
+    C = F.createChar(0xE250, GlyphName(0xE250))
+    P = C.glyphPen()
+    F["flagInternalDown"].draw(P)
+    C.transform((1,0,0,-1,0,0))   # reflect around x axis
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
+    P = None
+
+
+    # Do all the up flags (non-variants)
+    FLAGS_UP = [
+        ("flag8thUp", 1, "E240"),
+        ("flag16thUp", 2, "E242"),
+        ("flag32ndUp", 3, "E244"),
+        ("flag64thUp", 4, "E246"),
+        ("flag128thUp", 5, "E248"),
+        ("flag256thUp", 6, "E24A"),
+        ("flag512thUp", 7, "E24C"),
+        ("flag1024thUp", 8, "E24E")]
+
+    for _, flag_count, uni in FLAGS_UP:
+
+        C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
+        pen = C.glyphPen()
+        
+        # Quavers and semiquavers use the standard stem height. After that, need to
+        # start extending.
+        if flag_count == 1:
+            flag_base = 0
+        else:
+            flag_base = 1
+
+        for J in range(flag_count):
+            CNT = F["flagInternalUp"].layers[1][0]    # First contour of the foreground layer
+            CNT.transform((1,0,0,1,X-DEFAULTS["stemThickness"],Y + DEFAULTS["stemHeight"] + (DEFAULTS["flags_c"]["voffset"]*(J+flag_base))))
+            CNT.draw(pen)
+
+        # Draw a partial stem between the mid-points of the extreme flags
+        if flag_count >= 2:
+            pen.moveTo((X-DEFAULTS["stemThickness"],                          Y+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X                          ,                          Y+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X                          ,                          Y+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base+flag_count-0)+0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X-DEFAULTS["stemThickness"],                          Y+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base+flag_count-0)+0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.closePath()
+            
+            C.removeOverlap()
+
+
+        C.left_side_bearing = 0
+        C.right_side_bearing = 0
+        C.addAnchorPoint("stemDownSW", "base", X, Y-DEFAULTS["stemHeight"])
+        C.autoHint()
+        pen = None
 
 
 
@@ -414,7 +472,7 @@ def build_font(in_path, out_path):
 
     for glyph_name, flag_count, uni in FLAGS_DOWN:
 
-        C = F.createChar(int(uni, 16), glyph_name))
+        C = F.createChar(int(uni, 16), glyph_name)
         pen = C.glyphPen()
         
         # Quavers and semiquavers use the standard stem height. After that, need to
@@ -438,6 +496,51 @@ def build_font(in_path, out_path):
             pen.lineTo((X+DEFAULTS["stemThickness"],                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags"]["h"]+DEFAULTS["flags"]["sep"])*(flag_base)             +0.5*DEFAULTS["flags"]["h"]   ))
             pen.lineTo((X+DEFAULTS["stemThickness"],                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags"]["h"]+DEFAULTS["flags"]["sep"])*(flag_base-flag_count+2)-0.5*DEFAULTS["flags"]["h"]   ))
             pen.lineTo((X                          ,                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags"]["h"]+DEFAULTS["flags"]["sep"])*(flag_base-flag_count+2)-0.5*DEFAULTS["flags"]["h"]   ))
+            pen.closePath()
+            
+            C.removeOverlap()
+
+        C.left_side_bearing = 0
+        C.right_side_bearing = 0
+        C.addAnchorPoint("stemDownSW", "base", X, Y-DEFAULTS["stemHeight"])
+        C.autoHint()
+        pen = None
+
+
+    # Do all the down flags (non-variants)
+    FLAGS_DOWN = [
+        ("flag8thDown", 1, "E241"),
+        ("flag16thDown", 2, "E243"),
+        ("flag32ndDown", 3, "E245"),
+        ("flag64thDown", 4, "E247"),
+        ("flag128thDown", 5, "E249"),
+        ("flag256thDown", 6, "E24B"),
+        ("flag512thDown", 7, "E24D"),
+        ("flag1024thDown", 8, "E24F")]
+
+    for _, flag_count, uni in FLAGS_DOWN:
+
+        C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
+        pen = C.glyphPen()
+        
+        # Quavers and semiquavers use the standard stem height. After that, need to
+        # start extending.
+        if flag_count == 1:
+            flag_base = 0
+        else:
+            flag_base = 1
+
+        for J in range(flag_count):
+            CNT = F["flagInternalDown"].layers[1][0]    # First contour of the foreground layer
+            CNT.transform((1,0,0,1,X,Y - DEFAULTS["stemHeight"] + (DEFAULTS["flags_c"]["voffset"]*(-J+flag_base))))
+            CNT.draw(pen)
+
+        # Draw a partial stem between the mid-points of the extreme flags
+        if flag_count >= 2:
+            pen.moveTo((X                          ,                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base)             +0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X+DEFAULTS["stemThickness"],                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base)             +0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X+DEFAULTS["stemThickness"],                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-flag_count+0)-0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X                          ,                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-flag_count+0)-0.5*DEFAULTS["flags_c"]["voffset"]   ))
             pen.closePath()
             
             C.removeOverlap()
