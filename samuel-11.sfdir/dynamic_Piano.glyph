@@ -1,7 +1,7 @@
 StartChar: dynamicPiano
 Encoding: 58656 58656 62
-Width: 209
-Flags: HWO
+Width: 229
+Flags: HW
 LayerCount: 2
 Fore
 SplineSet
