@@ -44,7 +44,7 @@ def test_pillow(in_otf):
         II = Image.new("L", (600, 800), 255)
         DD = ImageDraw.Draw(II)
         font = ImageFont.truetype(str(in_otf), size=196)
-        for I, UU in enumerate([0xE520, 0xE522]):
+        for I, UU in enumerate([0xE520, 0xE522, 0xE521]):
             DD.text((50 + 90*I, 40), struct.pack("<H", UU).decode('UTF-16LE'), font=font)
         
         font = ImageFont.truetype(str(in_otf), size=64)
