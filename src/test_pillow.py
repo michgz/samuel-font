@@ -55,8 +55,8 @@ def test_pillow(in_otf):
 
         FORTISSIMO = [(1, 0xE522), (2, 0xE52F), (3, 0xE530), (4, 0xE531), (5, 0xE532), (6, 0xE533)]
         for I, UU in enumerate(FORTISSIMO):
-            DD.text((30 + 40*I, 440), u'\uE522' * UU[0], font=font)
-            DD.text((30 + 40*I, 540), struct.pack("<H", UU[1]).decode('UTF-16LE'), font=font)
+            DD.text((30 + 60*I, 440), u'\uE522' * UU[0], font=font)
+            DD.text((30 + 60*I, 540), struct.pack("<H", UU[1]).decode('UTF-16LE'), font=font)
             
         MIXED = [(u'\uE522\uE520', 0xE534), (u'\uE520\uE522', 0xE52E)]
         for I, UU in enumerate(MIXED):
