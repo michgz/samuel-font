@@ -1,21 +1,21 @@
 StartChar: dynamicRinforzando
 Encoding: 58659 58659 69
 Width: 1000
-Flags: H
+Flags: HO
 LayerCount: 2
 Fore
 SplineSet
-0 0 m 29
- 107 392 l 25
- 37 404 l 25
- 35 458 l 25
- 181 416 l 25
- 335 484 l 25
- 573 382 l 25
- 487 278 l 25
- 313 386 l 25
- 177 332 l 25
- 123 0 l 25
- 0 0 l 29
+0 0 m 1
+ 55 210 l 1
+ 7 228 l 1
+ 8 278 l 1
+ 88 238 l 1
+ 88 238 130 280 196 280 c 3
+ 297 280 321 190 321 190 c 1
+ 268 142 l 1
+ 268 142 247.089919145 215 197 215 c 3
+ 151 215 143 178 143 178 c 1
+ 123 0 l 1
+ 0 0 l 1
 EndSplineSet
 EndChar
