@@ -968,7 +968,40 @@ def build_font(in_path, out_path):
         C.right_side_bearing = 0
         C.autoHint()
         P = None
+    
+    
+    
+    # Create combined dynamics markings
+    
+    # omit pp and ff, since they are already existing in the font.
+    DYNAM = [(0xE52A, [0xE520, 0xE520, 0xE520]),]
+    
+    for DD in DYNAM:
+        C = F.createChar(DD[0], GlyphName(DD[0]))
+        P = C.glyphPen()
         
+        for I, CC in enumerate(DD[1]):
+        
+            print("Sub glyph ", I)
+            print("------------")
+            print("Bounding box: ", F[GlyphName(CC)].boundingBox())
+            print("Left bearing: ", F[GlyphName(CC)].left_side_bearing)
+            print("Right bearing: ", F[GlyphName(CC)].right_side_bearing)
+        
+        
+            L = F[GlyphName(CC)].layers[1]
+            L.transform((1,0,0,1,100*I,0))
+            L.draw(P)
+        
+        C.autoHint()
+        P = None
+    
+    
+    
+    
+    
+    
+     
     """ + \
     """
     F.save("{0}")
