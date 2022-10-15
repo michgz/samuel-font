@@ -1,0 +1,21 @@
+StartChar: dynamicNiente
+Encoding: 58662 58662 72
+Width: 1000
+Flags: H
+LayerCount: 2
+Fore
+SplineSet
+0 0 m 29
+ 99 294 l 25
+ 43 324 l 25
+ 93 360 l 25
+ 187 282 l 25
+ 261 340 l 25
+ 361 268 l 25
+ 307 0 l 25
+ 205 0 l 25
+ 185 188 l 25
+ 87 12 l 25
+ 0 0 l 29
+EndSplineSet
+EndChar
