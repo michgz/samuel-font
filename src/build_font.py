@@ -980,18 +980,36 @@ def build_font(in_path, out_path):
         C = F.createChar(DD[0], GlyphName(DD[0]))
         P = C.glyphPen()
         
+        X = 0
+        
         for I, CC in enumerate(DD[1]):
         
-            print("Sub glyph ", I)
-            print("------------")
-            print("Bounding box: ", F[GlyphName(CC)].boundingBox())
-            print("Left bearing: ", F[GlyphName(CC)].left_side_bearing)
-            print("Right bearing: ", F[GlyphName(CC)].right_side_bearing)
+            #print("Sub glyph ", I)
+            #print("------------")
+            #print("Bounding box: ", F[GlyphName(CC)].boundingBox())
+            #print("Left bearing: ", F[GlyphName(CC)].left_side_bearing)
+            #print("Right bearing: ", F[GlyphName(CC)].right_side_bearing)
+            
+            BB = F[GlyphName(CC)].boundingBox()
+            
+            # Shift X-position by the left bearing. I think there's nothing to
+            # do here because everything is aligned to X=0 point
+            
+            X += 0
         
         
             L = F[GlyphName(CC)].layers[1]
-            L.transform((1,0,0,1,100*I,0))
+            L.transform((1,0,0,1,X,0))
             L.draw(P)
+            
+            # Shift X-position by the right bearing. Here, we do actually use
+            # it.
+            
+            X += BB[2] + F[GlyphName(CC)].right_side_bearing
+            
+            
+            
+            
         
         C.autoHint()
         P = None
