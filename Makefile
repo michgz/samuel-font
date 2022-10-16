@@ -7,7 +7,7 @@ MKDIR = mkdir
 RM = rm -fr
 COPY = cp
 
-all: test_pillow samuel-12.sfd
+all: test_samantha samuel-12.sfd
 
 otf: samuel-12.sfd src/build_otf.py _build
 	$(RM) _build/otf
@@ -23,10 +23,13 @@ samuel-12.sfd: src/build_font.py samuel-11.sfdir
 test_verovio: src/test_verovio.py samuel-12.sfd
 	$(PYTHON) src/test_verovio.py samuel-12.sfd
 
+test_samantha: src/test_samantha.py samuel-12.sfd
+	$(PYTHON) src/test_samantha.py samuel-12.sfd
+
 test_pillow: otf
 	$(PYTHON) src/test_pillow.py _build/otf/$(FONT_NAME_LOWCASE)-14.otf
 
 _build:
 	$(MKDIR) _build
 
-.PHONY: test_verovio test_pillow otf
+.PHONY: test_verovio test_pillow test_samantha otf

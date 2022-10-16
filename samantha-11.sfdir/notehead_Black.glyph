@@ -1,0 +1,16 @@
+StartChar: noteheadBlack
+Encoding: 57508 57508 7
+Width: 374
+Flags: HW
+AnchorPoint: "stemUpSE" 373 35 basechar 0
+AnchorPoint: "stemDownNW" 1 -30 basechar 0
+LayerCount: 2
+Fore
+SplineSet
+0 -29 m 7
+ 0 99.0625 173 125 273 125 c 7
+ 325.038085938 125 374 73.052734375 374 35 c 7
+ 374 -77 282.31640625 -115 124 -115 c 7
+ 71 -115 0 -82 0 -29 c 7
+EndSplineSet
+EndChar
