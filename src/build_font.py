@@ -37,6 +37,10 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
 def build_font(in_path, out_path):
 
     S = """
+    
+    __INPUT_PATH__ = "{0}"
+    """.format(str(in_path)) + \
+    """
     import fontforge
     import json
     import pathlib
@@ -50,7 +54,7 @@ def build_font(in_path, out_path):
             raise Exception(u)
         return X[0]
 
-    F = fontforge.open("samuel-11.sfdir")
+    F = fontforge.open(__INPUT_PATH__)
 
     # 5-line stave. Included in "sebastian"
     C = F.createChar(0x003D, "equal")
@@ -960,14 +964,15 @@ def build_font(in_path, out_path):
               (0xE4A7, "articStaccatissimoBelow")]
               
     for A in ARTICS:
-        C = F.createChar(A[0], GlyphName(A[0]))
-        P = C.glyphPen()
-        F[GlyphName(A[0] - 1)].draw(P)   # the "Above" variant is always 1 less
-        C.transform((1,0,0,-1,0,0))    # Reflect around the x axis
-        C.left_side_bearing = 0
-        C.right_side_bearing = 0
-        C.autoHint()
-        P = None
+        if GlyphName(A[0] - 1) in F:
+            C = F.createChar(A[0], GlyphName(A[0]))
+            P = C.glyphPen()
+            F[GlyphName(A[0] - 1)].draw(P)   # the "Above" variant is always 1 less
+            C.transform((1,0,0,-1,0,0))    # Reflect around the x axis
+            C.left_side_bearing = 0
+            C.right_side_bearing = 0
+            C.autoHint()
+            P = None
     
     
     

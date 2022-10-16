@@ -7,7 +7,7 @@ MKDIR = mkdir
 RM = rm -fr
 COPY = cp
 
-all: test_samantha samuel-12.sfd
+all: test_samantha samantha-12.sfd
 
 otf: samuel-12.sfd src/build_otf.py _build
 	$(RM) _build/otf
@@ -17,14 +17,17 @@ otf: samuel-12.sfd src/build_otf.py _build
 	$(COPY) _build/otf/$(FONT_NAME_LOWCASE)-14.otf font/$(FONT_NAME_LOWCASE).otf
 	$(COPY) _build/otf/$(FONT_NAME_LOWCASE)-metadata.json font/
 
+samantha-12.sfd: src/build_font.py samantha-11.sfdir
+	$(PYTHON) src/build_font.py samantha-11.sfdir samantha-12.sfd
+
 samuel-12.sfd: src/build_font.py samuel-11.sfdir
 	$(PYTHON) src/build_font.py samuel-11.sfdir samuel-12.sfd
 
 test_verovio: src/test_verovio.py samuel-12.sfd
 	$(PYTHON) src/test_verovio.py samuel-12.sfd
 
-test_samantha: src/test_samantha.py samuel-12.sfd
-	$(PYTHON) src/test_samantha.py samuel-12.sfd
+test_samantha: src/test_samantha.py samantha-12.sfd
+	$(PYTHON) src/test_samantha.py samantha-12.sfd
 
 test_pillow: otf
 	$(PYTHON) src/test_pillow.py _build/otf/$(FONT_NAME_LOWCASE)-14.otf
