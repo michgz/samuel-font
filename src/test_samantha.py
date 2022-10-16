@@ -12,7 +12,10 @@ import subprocess
 from build_font import build_font
 
 
-__NAME__ = "Samuel"
+__NAME__ = "Samantha"
+
+
+Compare_Image = "0102=95.jpg"
 
 
 def CreateVerovioFont(src, name, dstdir):
@@ -130,9 +133,9 @@ def test_verovio(in_path):
     import verovio
 
     V = verovio.toolkit()
-    V.loadFile('test1.musicxml')
-    V.setFont("Samuel")   # use the font that we've just created
-    V.renderToSVGFile('test1out.svg')
+    V.loadFile('test2.musicxml')
+    V.setFont(__NAME__)   # use the font that we've just created
+    V.renderToSVGFile('test2out.svg')
 
 
     # Change from SVG to PNG. There are surprisingly few cross-platform ways of doing this.
@@ -141,8 +144,8 @@ def test_verovio(in_path):
 
 
 
-    P_IN = pathlib.Path.cwd().resolve().joinpath("test1out.svg")
-    P_OUT = pathlib.Path.cwd().resolve().joinpath("test1out.png")
+    P_IN = pathlib.Path.cwd().resolve().joinpath("test2out.svg")
+    P_OUT = pathlib.Path.cwd().resolve().joinpath("test2out.png")
 
     subprocess.run(['inkscape', '-o', str(P_OUT), '--export-overwrite', '--export-type=png', '--export-area={0}:{1}:{2}:{3}'.format(0, 0, 1600, 500), '--export-background=white', str(P_IN)])
 
