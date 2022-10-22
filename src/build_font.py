@@ -352,6 +352,12 @@ def build_font(in_path, out_path):
 
     for _, flag_count, uni in FLAGS_UP:
 
+
+        Y_correction = -250 if flag_count == 1 else -500
+        # Sort this out!! This is just a correction so things don't look wildly
+        # wrong, but really should be matching the positioning in Bravura.
+
+
         C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
         pen = C.glyphPen()
         
@@ -364,15 +370,15 @@ def build_font(in_path, out_path):
 
         for J in range(flag_count):
             CNT = F["flagInternalUp"].layers[1][0]    # First contour of the foreground layer
-            CNT.transform((1,0,0,1,X-DEFAULTS["stemThickness"],Y + DEFAULTS["stemHeight"] + (DEFAULTS["flags_c"]["voffset"]*(J+flag_base))))
+            CNT.transform((1,0,0,1,X-DEFAULTS["stemThickness"],Y+Y_correction + DEFAULTS["stemHeight"] + (DEFAULTS["flags_c"]["voffset"]*(J+flag_base))))
             CNT.draw(pen)
 
         # Draw a partial stem between the mid-points of the extreme flags
         if flag_count >= 2:
-            pen.moveTo((X-DEFAULTS["stemThickness"],                          Y+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
-            pen.lineTo((X                          ,                          Y+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
-            pen.lineTo((X                          ,                          Y+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base+flag_count-0)+0.5*DEFAULTS["flags_c"]["voffset"]   ))
-            pen.lineTo((X-DEFAULTS["stemThickness"],                          Y+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base+flag_count-0)+0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.moveTo((X-DEFAULTS["stemThickness"],                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X                          ,                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X                          ,                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base+flag_count-0)+0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X-DEFAULTS["stemThickness"],                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base+flag_count-0)+0.5*DEFAULTS["flags_c"]["voffset"]   ))
             pen.closePath()
             
             C.removeOverlap()
@@ -380,7 +386,7 @@ def build_font(in_path, out_path):
 
         C.left_side_bearing = 0
         C.right_side_bearing = 0
-        C.addAnchorPoint("stemDownSW", "base", X, Y-DEFAULTS["stemHeight"])
+        C.addAnchorPoint("stemUpNW", "base", X, Y+Y_correction+DEFAULTS["stemHeight"])
         C.autoHint()
         pen = None
 
@@ -524,6 +530,13 @@ def build_font(in_path, out_path):
 
     for _, flag_count, uni in FLAGS_DOWN:
 
+
+        Y_correction = 250 if flag_count == 1 else 500
+        # Sort this out!! This is just a correction so things don't look wildly
+        # wrong, but really should be matching the positioning in Bravura.
+
+
+
         C = F.createChar(int(uni, 16), GlyphName(int(uni, 16)))
         pen = C.glyphPen()
         
@@ -536,22 +549,22 @@ def build_font(in_path, out_path):
 
         for J in range(flag_count):
             CNT = F["flagInternalDown"].layers[1][0]    # First contour of the foreground layer
-            CNT.transform((1,0,0,1,X,Y - DEFAULTS["stemHeight"] + (DEFAULTS["flags_c"]["voffset"]*(-J+flag_base))))
+            CNT.transform((1,0,0,1,X,Y+Y_correction - DEFAULTS["stemHeight"] + (DEFAULTS["flags_c"]["voffset"]*(-J+flag_base))))
             CNT.draw(pen)
 
         # Draw a partial stem between the mid-points of the extreme flags
         if flag_count >= 2:
-            pen.moveTo((X                          ,                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base)             +0.5*DEFAULTS["flags_c"]["voffset"]   ))
-            pen.lineTo((X+DEFAULTS["stemThickness"],                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base)             +0.5*DEFAULTS["flags_c"]["voffset"]   ))
-            pen.lineTo((X+DEFAULTS["stemThickness"],                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-flag_count+0)-0.5*DEFAULTS["flags_c"]["voffset"]   ))
-            pen.lineTo((X                          ,                          Y-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-flag_count+0)-0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.moveTo((X                          ,                          Y+Y_correction-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base)             +0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X+DEFAULTS["stemThickness"],                          Y+Y_correction-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base)             +0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X+DEFAULTS["stemThickness"],                          Y+Y_correction-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-flag_count+0)-0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X                          ,                          Y+Y_correction-DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-flag_count+0)-0.5*DEFAULTS["flags_c"]["voffset"]   ))
             pen.closePath()
             
             C.removeOverlap()
 
         C.left_side_bearing = 0
         C.right_side_bearing = 0
-        C.addAnchorPoint("stemDownSW", "base", X, Y-DEFAULTS["stemHeight"])
+        C.addAnchorPoint("stemDownSW", "base", X, Y+Y_correction-DEFAULTS["stemHeight"])
         C.autoHint()
         pen = None
 
