@@ -333,6 +333,7 @@ def build_font(in_path, out_path):
     P = C.glyphPen()
     F["flagInternalDown"].draw(P)
     C.transform((1,0,0,-1,0,0))   # reflect around x axis
+    C.correctDirection()          # Correct the direction
     C.left_side_bearing = 0
     C.right_side_bearing = 0
     C.autoHint()
@@ -375,10 +376,10 @@ def build_font(in_path, out_path):
 
         # Draw a partial stem between the mid-points of the extreme flags
         if flag_count >= 2:
-            pen.moveTo((X-DEFAULTS["stemThickness"],                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
-            pen.lineTo((X                          ,                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
-            pen.lineTo((X                          ,                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base+flag_count-0)+0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.moveTo((X                          ,                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X-DEFAULTS["stemThickness"],                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base-1)           -0.5*DEFAULTS["flags_c"]["voffset"]   ))
             pen.lineTo((X-DEFAULTS["stemThickness"],                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base+flag_count-0)+0.5*DEFAULTS["flags_c"]["voffset"]   ))
+            pen.lineTo((X                          ,                          Y+Y_correction+DEFAULTS["stemHeight"]+(DEFAULTS["flags_c"]["voffset"])*(flag_base+flag_count-0)+0.5*DEFAULTS["flags_c"]["voffset"]   ))
             pen.closePath()
             
             C.removeOverlap()
@@ -416,6 +417,12 @@ def build_font(in_path, out_path):
 
 
 
+
+    X, Y = None, None
+    for A in F[GlyphName(0xE0A4)].anchorPoints:
+        if A[0] == 'stemUpSE' and A[1] == 'base':
+            X, Y = A[2], A[3]
+
     NOTES_UP = [
         ("noteQuarterUp", "E1D5",  None),
         ("note8thUp", "E1D7",  "E240"),
@@ -436,9 +443,12 @@ def build_font(in_path, out_path):
         F[GlyphName(0xE0A4)].draw(pen)
         if uni_flag:
             try:
-                F[GlyphName(int(uni_flag, 16))].draw(pen)       
+                CNT = F[GlyphName(int(uni_flag, 16))].layers[1][0]    # First contour of the foreground layer
             except TypeError:
-              print('uni' + uni_flag)
+                print('uni' + uni_flag)
+                raise
+        CNT.transform((1,0,0,1,X-DEFAULTS["stemThickness"],Y+DEFAULTS["stemHeight"]))
+        CNT.draw(pen)
         pen.moveTo((X,Y))
         pen.lineTo((X-DEFAULTS["stemThickness"],Y))
         pen.lineTo((X-DEFAULTS["stemThickness"],Y+DEFAULTS["stemHeight"]))
@@ -594,7 +604,10 @@ def build_font(in_path, out_path):
 
 
 
-
+    X, Y = None, None
+    for A in F[GlyphName(0xE0A4)].anchorPoints:
+        if A[0] == 'stemDownNW' and A[1] == 'base':
+            X, Y = A[2], A[3]
 
 
     NOTES_DOWN = [
@@ -616,7 +629,9 @@ def build_font(in_path, out_path):
         pen = C.glyphPen()
         F[GlyphName(0xE0A4)].draw(pen)
         if uni_flag:
-            F[GlyphName(int(uni_flag, 16))].draw(pen)
+            CNT = F[GlyphName(int(uni_flag, 16))].layers[1][0]    # First contour of the foreground layer
+            CNT.transform((1,0,0,1,X,Y-DEFAULTS["stemHeight"]))
+            CNT.draw(pen)
         pen.moveTo((X,Y))
         pen.lineTo((X+DEFAULTS["stemThickness"],Y))
         pen.lineTo((X+DEFAULTS["stemThickness"],Y-DEFAULTS["stemHeight"]))
