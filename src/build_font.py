@@ -447,8 +447,8 @@ def build_font(in_path, out_path):
             except TypeError:
                 print('uni' + uni_flag)
                 raise
-        CNT.transform((1,0,0,1,X-DEFAULTS["stemThickness"],Y+DEFAULTS["stemHeight"]))
-        CNT.draw(pen)
+            CNT.transform((1,0,0,1,X-DEFAULTS["stemThickness"],Y+DEFAULTS["stemHeight"]))
+            CNT.draw(pen)
         pen.moveTo((X,Y))
         pen.lineTo((X-DEFAULTS["stemThickness"],Y))
         pen.lineTo((X-DEFAULTS["stemThickness"],Y+DEFAULTS["stemHeight"]))
