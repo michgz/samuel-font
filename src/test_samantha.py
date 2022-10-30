@@ -133,9 +133,9 @@ def test_verovio(in_path):
     import verovio
 
     V = verovio.toolkit()
-    V.loadFile('test3.musicxml')
+    V.loadFile('test4.musicxml')
     V.setFont(__NAME__)   # use the font that we've just created
-    V.renderToSVGFile('test3out.svg')
+    V.renderToSVGFile('test4out.svg')
 
 
     # Change from SVG to PNG. There are surprisingly few cross-platform ways of doing this.
@@ -144,10 +144,10 @@ def test_verovio(in_path):
 
 
 
-    P_IN = pathlib.Path.cwd().resolve().joinpath("test3out.svg")
-    P_OUT = pathlib.Path.cwd().resolve().joinpath("test3out.png")
+    P_IN = pathlib.Path.cwd().resolve().joinpath("test4out.svg")
+    P_OUT = pathlib.Path.cwd().resolve().joinpath("test4out.png")
 
-    subprocess.run(['inkscape', '-o', str(P_OUT), '--export-overwrite', '--export-type=png', '--export-area={0}:{1}:{2}:{3}'.format(0, 0, 1600, 500), '--export-background=white', str(P_IN)])
+    subprocess.run(['inkscape', '-o', str(P_OUT), '--export-overwrite', '--export-type=png', '--export-area={0}:{1}:{2}:{3}'.format(0, 0, 1750, 900), '--export-background=white', str(P_IN)])
 
 
 if __name__=="__main__":
