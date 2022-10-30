@@ -32,6 +32,14 @@ test_samantha: src/test_samantha.py samantha-12.sfd
 test_pillow: otf
 	$(PYTHON) src/test_pillow.py _build/otf/$(FONT_NAME_LOWCASE)-14.otf
 
+otf_samantha: samantha-12.sfd src/build_otf.py _build
+	$(RM) _build/otf
+	$(MKDIR) _build/otf
+	$(PYTHON) src/build_otf.py samantha-12.sfd _build/otf/Samantha-14.otf
+
+test_pillow_samantha: otf_samantha
+	$(PYTHON) src/test_pillow.py _build/otf/Samantha-14.otf
+
 _build:
 	$(MKDIR) _build
 
