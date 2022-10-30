@@ -21,7 +21,7 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               # "flags_c" is the curvy (non-variant) flags.
               "flags_c": {"voffset": 190},    \
-              "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
+              "sharp":   {"h": 500, "w": 100, "hthick": 16, "vthick": 80, "hsep": 75, "vsep": 190, "vdrop": 60},  \
               "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
               "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 110},   \
               "restLonga": {"w": 210},   \
