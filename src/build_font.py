@@ -31,6 +31,7 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "dot_diameter": 70,       \
               # overlap is how much beyond the period to extend the stem
               "quaver_rest": {"period": 250, "overlap": 55},    \
+              "cut_time": {"x": 250, "thickness": 35, "y1": -350, "y2": 350},   \
           }
 
 
@@ -1072,8 +1073,26 @@ def build_font(in_path, out_path):
     
     
     
+
     
+    C = F.createChar(0xE08B, GlyphName(0xE08B))
+    P = C.glyphPen()
+    F["timeSigCommon"].draw(P)
     
+    P.moveTo((DEFAULTS["cut_time"]["x"]-DEFAULTS["cut_time"]["thickness"]/2,DEFAULTS["cut_time"]["y1"]))
+    P.lineTo((DEFAULTS["cut_time"]["x"]-DEFAULTS["cut_time"]["thickness"]/2,DEFAULTS["cut_time"]["y2"]))
+    P.lineTo((DEFAULTS["cut_time"]["x"]+DEFAULTS["cut_time"]["thickness"]/2,DEFAULTS["cut_time"]["y2"]))
+    P.lineTo((DEFAULTS["cut_time"]["x"]+DEFAULTS["cut_time"]["thickness"]/2,DEFAULTS["cut_time"]["y1"]))
+    P.closePath()
+    C.removeOverlap()
+
+
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
+    P = None
+    
+
     
      
     """ + \
