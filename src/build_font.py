@@ -21,8 +21,8 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
               "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
               # "flags_c" is the curvy (non-variant) flags.
               "flags_c": {"voffset": 190},    \
-              "sharp":   {"h": 480, "w": 105, "hthick": 16, "vthick": 80, "hsep": 75, "vsep": 190, "vdrop": 60},  \
-              "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
+              "sharp":   {"h": 620, "w": 105, "hthick": 16, "vthick": 80, "hsep": 87, "vsep": 220, "vdrop": 82},  \
+              "natural": {"h": 580,           "hthick": 22, "vthick": 80, "hsep": 110, "vsep": 210, "vdrop": 90},  \
               "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 110},   \
               "restLonga": {"w": 210},   \
               "rest": {"w": 368, "h": 125},    \
@@ -1092,7 +1092,21 @@ def build_font(in_path, out_path):
     C.autoHint()
     P = None
     
+    
+    
+    
+    C = F.createChar(0xE4C1, GlyphName(0xE4C1))
+    P = C.glyphPen()
+    
+    L = F["fermataAbove"].layers[1]
+    L.transform((1,0,0,-1,0,0))
+    L.draw(P)
 
+
+    C.left_side_bearing = int(F["fermataAbove"].left_side_bearing)
+    C.right_side_bearing = int(F["fermataAbove"].right_side_bearing)
+    C.autoHint()
+    P = None
     
      
     """ + \
