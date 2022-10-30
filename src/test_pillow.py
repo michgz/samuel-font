@@ -12,7 +12,8 @@ def test_pillow(in_otf):
 
     TEST_CLEFS = False
     TEST_FLAGS = False
-    TEST_DYNAMICS = True
+    TEST_DYNAMICS = False
+    TEST_NUMERALS = True
     
 
 
@@ -68,6 +69,21 @@ def test_pillow(in_otf):
             
         II.show()
         
+    if TEST_NUMERALS:
+        # Tests the time signature numerals
+        II = Image.new("L", (1000, 300), 255)
+        DD = ImageDraw.Draw(II)
+        font = ImageFont.truetype(str(in_otf), size=28)
+        for I, UU in enumerate(range(0xE080, 0xE08A)):
+            DD.text((50 + 20*I, 40), struct.pack("<H", UU).decode('UTF-16LE'), font=font)
+
+
+        font = ImageFont.truetype(str(in_otf), size=196)
+        for I, UU in enumerate(range(0xE080, 0xE08A)):
+            DD.text((50 + 90*I, 85), struct.pack("<H", UU).decode('UTF-16LE'), font=font)
+
+            
+        II.show()
 
 
 if __name__=="__main__":
