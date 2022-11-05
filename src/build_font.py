@@ -1124,7 +1124,21 @@ def build_font(in_path, out_path):
     C.autoHint()
     P = None
 
-     
+
+    # Flipped version of Accent
+    C = F.createChar(0xE4A1, GlyphName(0xE4A1))
+    P = C.glyphPen()
+    
+    L = F["articAccentAbove"].layers[1]
+    L.transform((1,0,0,-1,0,0))
+    L.draw(P)
+
+
+    C.left_side_bearing = int(F["articAccentAbove"].left_side_bearing)
+    C.right_side_bearing = int(F["articAccentAbove"].right_side_bearing)
+    C.autoHint()
+    P = None
+ 
     """ + \
     """
     F.save("{0}")
