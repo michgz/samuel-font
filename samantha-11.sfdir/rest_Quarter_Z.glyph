@@ -1,9 +1,9 @@
 StartChar: restQuarterZ
 Encoding: 58614 58614 13
 Width: 365
-Flags: HW
-HStem: -173 24<333.118 348.649> -131 56<66.9455 251.907>
-VStem: 291 74<185.55 297.777>
+Flags: W
+HStem: -180 37<329.521 347.459> -137 62<67.7611 251.541>
+VStem: 278 87<177.284 317.827>
 LayerCount: 2
 Fore
 SplineSet
