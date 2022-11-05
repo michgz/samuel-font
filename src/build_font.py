@@ -1094,7 +1094,7 @@ def build_font(in_path, out_path):
     
     
     
-    
+    # Flipped version of Fermata
     C = F.createChar(0xE4C1, GlyphName(0xE4C1))
     P = C.glyphPen()
     
@@ -1107,7 +1107,23 @@ def build_font(in_path, out_path):
     C.right_side_bearing = int(F["fermataAbove"].right_side_bearing)
     C.autoHint()
     P = None
+
+
+
+    # Flipped version of Marcato
+    C = F.createChar(0xE4AD, GlyphName(0xE4AD))
+    P = C.glyphPen()
     
+    L = F["articMarcatoAbove"].layers[1]
+    L.transform((1,0,0,-1,0,0))
+    L.draw(P)
+
+
+    C.left_side_bearing = int(F["articMarcatoAbove"].left_side_bearing)
+    C.right_side_bearing = int(F["articMarcatoAbove"].right_side_bearing)
+    C.autoHint()
+    P = None
+
      
     """ + \
     """
