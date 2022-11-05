@@ -1,0 +1,19 @@
+StartChar: articMarcatoAbove
+Encoding: 58540 58540 33
+Width: 187
+Flags: WO
+HStem: 7 206
+VStem: 0 187
+LayerCount: 2
+Fore
+SplineSet
+0 7 m 1
+ 84 213 l 1
+ 123 213 l 1
+ 187 9 l 5
+ 114 8 l 1
+ 77 103 l 1
+ 35 7 l 1
+ 0 7 l 1
+EndSplineSet
+EndChar
