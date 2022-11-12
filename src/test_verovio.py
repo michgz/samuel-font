@@ -112,17 +112,10 @@ def test_verovio(in_path):
 
     # Put the font into the verovio data directory.
 
-    P = pathlib.Path(venv.sysconfig.get_path('platlib'))
+    P = pathlib.Path(__file__).parent.joinpath("verovio_data")
+    P.mkdir(exist_ok =True)
 
-    if not P.joinpath('verovio').is_dir():
-        print('Could not find verovio installed in this virtual environment. Try:\n\n    pip install verovio\n')
-        sys.exit(-1)
-
-    if not os.access(P.joinpath('verovio'), os.W_OK):
-        print('Do not have write access to the verovio installation. Most likely you are running\nfrom the main installation of python rather than a virtual environment.\nPlease call this script from a virtual environment. See:\n\n    https://docs.python.org/3/library/venv.html\n')
-        sys.exit(-1)
-
-    CreateVerovioFont(in_path, __NAME__, P.joinpath("verovio", "data"))
+    CreateVerovioFont(in_path, __NAME__, P)
 
 
 
@@ -130,6 +123,7 @@ def test_verovio(in_path):
     import verovio
 
     V = verovio.toolkit()
+    V.setResourcePath(str(P))
     V.loadFile('test1.musicxml')
     V.setFont("Samuel")   # use the font that we've just created
     V.renderToSVGFile('test1out.svg')
