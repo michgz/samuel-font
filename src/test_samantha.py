@@ -155,7 +155,7 @@ def test_verovio(in_path):
     P_IN = pathlib.Path.cwd().resolve().joinpath("test4out.svg")
     P_OUT = pathlib.Path.cwd().resolve().joinpath("test4out.png")
 
-    subprocess.run(['inkscape', '-o', str(P_OUT), '--export-overwrite', '--export-type=png', '--export-area={0}:{1}:{2}:{3}'.format(0, 0, 1750, 900), '--export-background=white', str(P_IN)])
+    subprocess.run(['inkscape', '-o', str(P_OUT), '--export-overwrite', '--export-type=png', '--export-area={0}:{1}:{2}:{3}'.format(0, 0, 1750, 900), '--export-background=#FAE9C4', str(P_IN)])
 
 
 if __name__=="__main__":
