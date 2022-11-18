@@ -119,6 +119,19 @@ def test_verovio(in_path):
     CreateVerovioFont(in_path, __NAME__, P)
 
 
+    # Copy the fonts from the verovio directory
+    Q = pathlib.Path(venv.sysconfig.get_path('platlib'))
+
+    if not Q.joinpath('verovio').is_dir():
+        print('Could not find verovio installed in this virtual environment. Try:\n\n    pip install verovio\n')
+        sys.exit(-1)
+
+    shutil.copy(Q.joinpath("verovio", "data", "Bravura.xml"), P)
+    shutil.copytree(Q.joinpath("verovio", "data", "Bravura"), P.joinpath("Bravura"), dirs_exist_ok=True)
+    shutil.copy(Q.joinpath("verovio", "data", "Leipzig.xml"), P)
+    shutil.copytree(Q.joinpath("verovio", "data", "Leipzig"), P.joinpath("Leipzig"), dirs_exist_ok=True)
+    shutil.copytree(Q.joinpath("verovio", "data", "text"), P.joinpath("text"), dirs_exist_ok=True)
+
 
     # Run Verovio to render the test score
     import verovio
@@ -128,6 +141,9 @@ def test_verovio(in_path):
     V.loadFile('test4.musicxml')
     V.setFont(__NAME__)   # use the font that we've just created
     V.renderToSVGFile('test4out.svg')
+
+
+
 
 
     # Change from SVG to PNG. There are surprisingly few cross-platform ways of doing this.
