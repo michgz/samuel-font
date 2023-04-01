@@ -22,7 +22,7 @@ otf: $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd src/build_otf.py $(BUILD_DIR) $(TMP_
 	$(RM)     $(BUILD_DIR)/otf
 	$(MKDIR)  $(BUILD_DIR)/otf
 	$(PYTHON) src/build_otf.py $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd _build/otf/$(FONT_NAME_LOWCASE)-14.otf
-	$(COPY)   $(TMP_DIR)/samuel-12-metadata.json _build/otf/$(FONT_NAME_LOWCASE)-metadata.json
+	$(COPY)   $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12-metadata.json _build/otf/$(FONT_NAME_LOWCASE)-metadata.json
 	$(COPY)   $(BUILD_DIR)/otf/$(FONT_NAME_LOWCASE)-14.otf font/$(FONT_NAME_LOWCASE).otf
 	$(COPY)   $(BUILD_DIR)/otf/$(FONT_NAME_LOWCASE)-metadata.json font/
 

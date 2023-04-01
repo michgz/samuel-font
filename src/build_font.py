@@ -37,6 +37,10 @@ DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   
 def build_font(in_path, out_path):
 
     S = """
+    
+    __INPUT_PATH__ = "{0}"
+    """.format(str(in_path)) + \
+    """
     import fontforge
     import json
     import pathlib
@@ -44,14 +48,13 @@ def build_font(in_path, out_path):
     with open(pathlib.Path("metadata", "glyphnames.json"), "r") as fnames:
         names = json.load(fnames)
 
-    F = fontforge.open("{0}")""".format(str(in_path))   \
-    + """
-
     def GlyphName(u):
         X = [x for x in names if names[x]['codepoint'] == "U+{0:04X}".format(u)]
         if len(X) != 1:
             raise Exception(u)
         return X[0]
+
+    F = fontforge.open(__INPUT_PATH__)
 
     # 5-line stave. Included in "sebastian"
     C = F.createChar(0x003D, "equal")
