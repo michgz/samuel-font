@@ -4,7 +4,7 @@ FONT_NAME = Samuel
 
 # Define some basic commands
 PYTHON = python
-MKDIR = mkdir
+MKDIR = mkdir -p
 RM = rm -fr
 COPY = cp
 
