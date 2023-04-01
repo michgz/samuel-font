@@ -44,13 +44,14 @@ def build_font(in_path, out_path):
     with open(pathlib.Path("metadata", "glyphnames.json"), "r") as fnames:
         names = json.load(fnames)
 
+    F = fontforge.open("{0}")""".format(str(in_path))   \
+    + """
+
     def GlyphName(u):
         X = [x for x in names if names[x]['codepoint'] == "U+{0:04X}".format(u)]
         if len(X) != 1:
             raise Exception(u)
         return X[0]
-
-    F = fontforge.open("samuel-11.sfdir")
 
     # 5-line stave. Included in "sebastian"
     C = F.createChar(0x003D, "equal")
