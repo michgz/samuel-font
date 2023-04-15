@@ -1,49 +1,19 @@
-# Build the font, adding geometric glyphs and filling out everything that needs
-# to be filled out
+"""
+Read in the raw font data in .SFDIR format and generate all of the geometrical/repeated
+glyphs to form the full font. Saves in .SFD format.
+"""
 
 
 import pathlib
-import venv
-import os
-import sys
-import shutil
-import textwrap
-import xml.etree.ElementTree as ET
-import subprocess
+import json
 
 
-__NAME__ = "Samuel"
-__VERSION__ = "0.0.1"
 
-DEFAULTS= {"staffLineThickness": 19, "stemThickness": 20, "stemHeight": 1000,   \
-              'beamSpacing': 25,   'beamThickness': 100,   \
-              # "flags" applies specifically to Straight flags (variant glyphs).
-              "flags": {"h": 80, "w": 180, "drop": 70, "sep": 40},    \
-              # "flags_c" is the curvy (non-variant) flags.
-              "flags_c": {"voffset": 190},    \
-              "sharp":   {"h": 540, "w": 110, "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
-              "natural": {"h": 540,           "hthick": 20, "vthick": 80, "hsep": 60, "vsep": 200, "vdrop": 50},  \
-              "barlines": {"hthick1": 10, "hthick2": 60, "hsep": 20, "hsep_dots": 20, "repeat_diameter": 110},   \
-              "restLonga": {"w": 210},   \
-              "rest": {"w": 368, "h": 125},    \
-              "staff": {"narrow": 200, "mid": 300, "wide": 400},     \
-              "leger": {"narrow": 200, "mid": 300, "wide": 400},     \
-              "dot_diameter": 70,       \
-              # overlap is how much beyond the period to extend the stem
-              "quaver_rest": {"period": 250, "overlap": 55},    \
-          }
+def build_font(__INPUT_PATH__ : pathlib.Path, __OUTPUT_PATH__ : pathlib.Path, DEFAULTS : dict):
+  
 
-
-def build_font(in_path, out_path):
-
-    S = """
-    
-    __INPUT_PATH__ = "{0}"
-    """.format(str(in_path)) + \
-    """
     import fontforge
-    import json
-    import pathlib
+
 
     with open(pathlib.Path("metadata", "glyphnames.json"), "r") as fnames:
         names = json.load(fnames)
@@ -54,7 +24,8 @@ def build_font(in_path, out_path):
             raise Exception(u)
         return X[0]
 
-    F = fontforge.open(__INPUT_PATH__)
+    F = fontforge.open(str(__INPUT_PATH__))
+
 
     # 5-line stave. Included in "sebastian"
     C = F.createChar(0x003D, "equal")
@@ -1042,51 +1013,32 @@ def build_font(in_path, out_path):
         P = None
     
     
-    
-    
-    
-    
-     
-    """ + \
-    """
-    F.save("{0}")
-    """.format(str(out_path))
+
+    F.save(str(__OUTPUT_PATH__))
 
 
-    with open('s2.py', 'w') as f_scr:
-        f_scr.write("DEFAULTS = {0}".format(str(DEFAULTS)))
-        f_scr.write(textwrap.dedent(S))
-    subprocess.run(['fontforge', '--script', 's2.py'])
 
 
-    # Create a SMuFL metadata file
-
-
-    S = ""
-    S += """
+def build_font_metadata(__INPUT_PATH__ : pathlib.Path, __OUTPUT_PATH__ : pathlib.Path, DEFAULTS : dict):
+  
 
     import json
     import fontforge
 
     D = {}
 
-    """
-    
-    S += "\n    D.update({'fontName': " + '"{0}"'.format(__NAME__) + "})\n"
-    S += "    D.update({'fontVersion': " + '"{0}"'.format(__VERSION__) + "})\n"
 
-    S += """
+
     D.update({'engravingDefaults': {}})
     D.update({'glyphAdvanceWidths': {}})
     D.update({'glyphBBoxes': {}})
     D.update({'glyphsWithAnchors': {}})
-    """
 
-    S += """
-    f = fontforge.open("{0}")
-    """.format(str(out_path))
+    f = fontforge.open(str(__INPUT_PATH__))
 
-    S += """
+    D.update({'fontName': f.fontname})    # .. or f.familyname
+    D.update({'fontVersion': str(f.version)})
+
 
     for GLIF in f.glyphs():
         D['glyphAdvanceWidths'].update({GLIF.glyphname: GLIF.width / 250.0})
@@ -1097,9 +1049,7 @@ def build_font(in_path, out_path):
             for ANCHOR in GLIF.anchorPoints:
                 E.update({ANCHOR[0]: [ANCHOR[2]/250.0, ANCHOR[3]/250.0]})
             D['glyphsWithAnchors'].update({GLIF.glyphname: E})
-    """
 
-    S += """
 
     # Now the generic stuff
 
@@ -1139,25 +1089,56 @@ def build_font(in_path, out_path):
         # "tieMidpointThickness":0.22,
         # "tupletBracketThickness":0.16
 
-    """
 
-    out_metadata = out_path.parent.joinpath(out_path.stem + "-metadata.json")
 
-    S += """
-
-    with open("{0}", "w") as f:
+    with open(__OUTPUT_PATH__, "w") as f:
         json.dump(D, f, indent = "\t")
 
-    """.format(str(out_metadata))
-
-    with open('s7.py', 'w') as f_scr:
-        f_scr.write("DEFAULTS = {0}".format(str(DEFAULTS)))
-        f_scr.write(textwrap.dedent(S))
-    subprocess.run(['fontforge', '--script', 's7.py'])
 
 
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        sys.exit(-1)
-    build_font(pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2]))
+
+if __name__=="__main__":
+
+    import argparse
+
+
+    # Parse command-line parameters
+    parser = argparse.ArgumentParser(description="Build the font")
+
+    parser.add_argument("-i", "--in", type=pathlib.Path, required=True, dest="_in")
+    parser.add_argument("-o", "--out", type=pathlib.Path, required=True)
+    parser.add_argument("-d", "--defaults", type=pathlib.Path, required=True)
+    parser.add_argument("-m", "--metadata-out", type=pathlib.Path)
+    
+
+    args = parser.parse_args()
+
+
+
+
+    # Pre-process the defaults file (which can be either JSON format, or Python
+    #  code defining a dictionary).
+    
+
+    T = args.defaults.read_text()
+    
+    # Decode the text, depending on what file extension was used.
+    if args.defaults.suffix.upper() == ".PY":
+        # A python input will just be evaluated. This can contain comments, whereas
+        # JSON cannot
+        DEFAULTS = eval(T)
+    elif args.defaults.suffix.upper() == ".JSON":
+        # In this case the structure is stored as plain JSON
+        DEFAULTS = json.loads(T)
+    else:
+        raise Exception(f"Unknown default file type: {args.defaults.suffix}")
+
+
+
+    # Now call the main function
+    build_font(args._in, args.out, DEFAULTS)
+
+    # And call the metadata function if required
+    if args.metadata_out is not None:
+        build_font_metadata(args.out, args.metadata_out, DEFAULTS)
 

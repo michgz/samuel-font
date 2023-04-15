@@ -4,6 +4,7 @@ FONT_NAME = Samuel
 
 # Define some basic commands
 PYTHON = python
+FONTFORGE = fontforge
 MKDIR = mkdir -p
 RM = rm -fr
 COPY = cp
@@ -21,13 +22,19 @@ all: test_pillow $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd
 otf: $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd src/build_otf.py $(BUILD_DIR) $(TMP_DIR)
 	$(RM)     $(BUILD_DIR)/otf
 	$(MKDIR)  $(BUILD_DIR)/otf
-	$(PYTHON) src/build_otf.py $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd _build/otf/$(FONT_NAME_LOWCASE)-14.otf
+	$(FONTFORGE) --script src/build_otf.py                      \
+            --in $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd         \
+            --out _build/otf/$(FONT_NAME_LOWCASE)-14.otf        
 	$(COPY)   $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12-metadata.json _build/otf/$(FONT_NAME_LOWCASE)-metadata.json
 	$(COPY)   $(BUILD_DIR)/otf/$(FONT_NAME_LOWCASE)-14.otf font/$(FONT_NAME_LOWCASE).otf
 	$(COPY)   $(BUILD_DIR)/otf/$(FONT_NAME_LOWCASE)-metadata.json font/
 
 $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd: _check_requirements $(TMP_DIR) src/build_font.py $(FONT_NAME_LOWCASE)-11.sfdir
-	$(PYTHON) src/build_font.py $(FONT_NAME_LOWCASE)-11.sfdir $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd
+	$(FONTFORGE) --script src/build_font.py                     \
+             --in $(FONT_NAME_LOWCASE)-11.sfdir                 \
+             --out $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd       \
+             --defaults src/my_defaults.py                      \
+             --metadata-out $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12-metadata.json
 
 test_verovio: src/test_verovio.py $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd
 	$(PYTHON) src/test_verovio.py $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd

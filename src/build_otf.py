@@ -1,36 +1,44 @@
-
+"""
+Output the OTF file
+"""
 
 import pathlib
-import subprocess
-import sys
-import textwrap
 
-def build_otf(in_sfd, out_otf):
+
+
+def build_generate_otf(__INPUT_PATH__ : pathlib.Path, __OUTPUT_PATH__ : pathlib.Path):
 
     # Delete any old file
     try:
-        out_otf.unlink()
+        __OUTPUT_PATH__.unlink()
     except FileNotFoundError:
         pass
 
-
-    S = """
     import fontforge
 
-    F = fontforge.open("{0}")
+    F = fontforge.open(str(__INPUT_PATH__))
 
-    F.generate("{1}")
+    F.generate(str(__OUTPUT_PATH__))
 
-    """.format(in_sfd.resolve(), out_otf.resolve())
 
-    with open("s8.py", "w") as f8:
-        f8.write(textwrap.dedent(S))
-        
-    subprocess.run(['fontforge', '--script', 's8.py'])
 
 
 if __name__=="__main__":
-    if len(sys.argv) < 3:
-        sys.exit(-1)
-    build_otf(pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2]))
+
+    import argparse
+
+
+    # Parse command-line parameters
+    parser = argparse.ArgumentParser(description="Generate the OTF file")
+
+    parser.add_argument("-i", "--in", type=pathlib.Path, required=True, dest="_in")
+    parser.add_argument("-o", "--out", type=pathlib.Path, required=True)
+    
+
+    args = parser.parse_args()
+
+
+    # Now call the main function
+    build_generate_otf(args._in, args.out)
+
 
