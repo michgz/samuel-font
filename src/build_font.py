@@ -705,6 +705,90 @@ def build_font(__INPUT_PATH__ : pathlib.Path, __OUTPUT_PATH__ : pathlib.Path, DE
     pen = None
 
 
+    # half sharp
+    X = 0
+    Y = 0
+    C = F.createChar(0xE282, GlyphName(0xE282))
+    pen = C.glyphPen()
+    # Upright 1
+    pen.moveTo((X+( 0-DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+( 0+DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+( 0+DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+( 0-DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+    pen.closePath()
+
+    # Horizontal 1
+    pen.moveTo((X-(DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//2),Y+( DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X+(DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//2),Y+( DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X+(DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//2),Y+( DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X-(DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//2),Y+( DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+    pen.closePath()
+
+    # Horizontal 2
+    pen.moveTo((X-(DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//2),Y+(-DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X+(DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//2),Y+(-DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X+(DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//2),Y+(-DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X-(DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//2),Y+(-DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+    pen.closePath()
+
+    C.removeOverlap()
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
+    pen = None
+
+
+
+
+    # three-quarter sharp
+    X = 0
+    Y = 0
+    C = F.createChar(0xE283, GlyphName(0xE283))
+    pen = C.glyphPen()
+    # Upright 1
+    pen.moveTo((X+( 2*DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+( 2*DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+( 2*DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+( 2*DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+    pen.closePath()
+
+    # Upright 2
+    pen.moveTo((X+(-0*DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+(-0*DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+(-0*DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+(-0*DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+    pen.closePath()
+
+    # Upright 3
+    pen.moveTo((X+(-2*DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+(-2*DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y+(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+(-2*DEFAULTS["sharp"]["hsep"]+DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+    pen.lineTo((X+(-2*DEFAULTS["sharp"]["hsep"]-DEFAULTS["sharp"]["hthick"])//2,Y-(DEFAULTS["sharp"]["h"])//2))
+    pen.closePath()
+
+    # Horizontal 1
+    pen.moveTo((X-DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//4,Y+( DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X+DEFAULTS["sharp"]["w"]+DEFAULTS["sharp"]["hsep"]//4,Y+( DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X+DEFAULTS["sharp"]["w"]+DEFAULTS["sharp"]["hsep"]//4,Y+( DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X-DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//4,Y+( DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+    pen.closePath()
+
+    # Horizontal 2
+    pen.moveTo((X-DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//4,Y+(-DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X+DEFAULTS["sharp"]["w"]+DEFAULTS["sharp"]["hsep"]//4,Y+(-DEFAULTS["sharp"]["vsep"]+DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X+DEFAULTS["sharp"]["w"]+DEFAULTS["sharp"]["hsep"]//4,Y+(-DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]+DEFAULTS["sharp"]["vdrop"])//2))
+    pen.lineTo((X-DEFAULTS["sharp"]["w"]-DEFAULTS["sharp"]["hsep"]//4,Y+(-DEFAULTS["sharp"]["vsep"]-DEFAULTS["sharp"]["vthick"]-DEFAULTS["sharp"]["vdrop"])//2))
+    pen.closePath()
+
+    C.removeOverlap()
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
+    pen = None
+
+
+
+
     # Rests
     C = F.createChar(0xE4E1, GlyphName(0xE4E1))
     pen = C.glyphPen()
