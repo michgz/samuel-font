@@ -229,6 +229,9 @@ def build_font(__INPUT_PATH__ : pathlib.Path, __OUTPUT_PATH__ : pathlib.Path, DE
     pen = C.glyphPen()
     DrawCircle(pen, 0, 0, DEFAULTS["dot_diameter"]/2)
     pen = None
+    
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
 
 
     X, Y = None, None
