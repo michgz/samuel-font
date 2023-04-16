@@ -14,5 +14,6 @@
       "dot_diameter": 70,
       # overlap is how much beyond the period to extend the stem
       "quaver_rest": {"period": 250, "overlap": 55},
+      "stein_zimmer_gap":  50,
 }
 

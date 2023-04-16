@@ -240,6 +240,30 @@ def build_font(__INPUT_PATH__ : pathlib.Path, __OUTPUT_PATH__ : pathlib.Path, DE
             X, Y = A[2], A[3]
 
 
+    # Stein-Zimmer flats are reversals of the standard one
+    C = F.createChar(0xE280, GlyphName(0xE280))
+    pen = C.glyphPen()
+    F["accidentalFlat"].draw(pen)
+    C.transform((-1,0,0,1,0,0))   # reflect around y axis
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
+    pen = None
+
+    C = F.createChar(0xE281, GlyphName(0xE281))
+    pen = C.glyphPen()
+    F["accidentalFlat"].draw(pen)
+    C.transform((-1,0,0,1,-DEFAULTS["stein_zimmer_gap"],0))   # reflect around y axis, and move left slightly
+    C.correctDirection()
+    F["accidentalFlat"].draw(pen)
+    C.left_side_bearing = 0
+    C.right_side_bearing = 0
+    C.autoHint()
+    pen = None
+    
+    
+
+
     # Override the X, Y defined above. At least for Verovio, the stemUpNW point needs to
     # be near (0,0)
     X = 0
