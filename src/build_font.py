@@ -1251,5 +1251,5 @@ if __name__=="__main__":
 
     # And call the metadata function if required
     if args.metadata_out is not None:
-        build_font_metadata(args.out, args.metadata_out, DEFAULTS)
+        build_font_metadata(args.out, args.metadata_out, DEFAULTS) 
 
