@@ -31,7 +31,7 @@ def build_verovio(src, name, dstdir):
         dstdir = pathlib.Path(dstdir)
     
 
-    fontforge.open(src).generate("{1}.svg".format(__TMP__))
+    fontforge.open(str(src)).generate("{0}.svg".format(__TMP__))
 
 
 

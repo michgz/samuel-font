@@ -23,9 +23,11 @@ def test_verovio(in_path):
     # Put the font into the verovio data directory.
 
     P = pathlib.Path(__file__).parent.joinpath("verovio_data")
-    P.mkdir(exist_ok =True)
+    #P.mkdir(exist_ok =True)
 
-    CreateVerovioFont(in_path, __NAME__, P)
+
+    # Copy all files into the relevant directory
+    shutil.copytree(in_path, P)
 
 
 
