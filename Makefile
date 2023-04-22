@@ -17,7 +17,7 @@ TMP_DIR     = _build/tmp
 FONT_NAME_LOWCASE = $(shell $(PYTHON) -c "print('$(FONT_NAME)'.lower())")
 
 
-all: test_pillow $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd
+all: test_verovio otf $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd
 
 otf: $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd src/build_otf.py $(BUILD_DIR) $(TMP_DIR)
 	$(RM)     $(BUILD_DIR)/otf
@@ -36,8 +36,13 @@ $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd: _check_requirements $(TMP_DIR) src/build
              --defaults src/my_defaults.py                      \
              --metadata-out $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12-metadata.json
 
-test_verovio: src/test_verovio.py $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd
-	$(PYTHON) src/test_verovio.py $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd
+test_verovio: otf src/build_verovio.py src/test_verovio.py $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd
+	$(RM)     $(BUILD_DIR)/verovio
+	$(MKDIR)  $(BUILD_DIR)/verovio
+	$(FONTFORGE)  --script src/build_verovio.py                       \
+            --in     $(TMP_DIR)/$(FONT_NAME_LOWCASE)-12.sfd           \
+            --outdir _build/verovio/                                  
+	$(PYTHON) src/test_verovio.py --indir   _build/verovio/
 
 test_pillow: otf
 	$(PYTHON) src/test_pillow.py _build/otf/$(FONT_NAME_LOWCASE)-14.otf
